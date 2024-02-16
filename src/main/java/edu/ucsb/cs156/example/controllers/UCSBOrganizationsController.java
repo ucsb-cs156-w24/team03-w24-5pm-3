@@ -81,4 +81,4 @@ public class UCSBOrganizationsController extends ApiController {
         ucsbOrganizationsRepository.delete(commons);
         return genericMessage("UCSBOrganizations with id %s deleted".formatted(orgCode));
     }
-}
+} 
