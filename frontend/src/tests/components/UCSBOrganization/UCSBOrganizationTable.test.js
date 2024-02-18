@@ -20,7 +20,7 @@ describe("RestaurantTable tests", () => {
   const expectedFields = ["orgCode", "orgTranslationShort", "orgTranslation", "inactive"];
   const testId = "UCSBOrganizationTable";
 
-  test("renders empty table correctly", () => {
+  test("renders empty table correctly", () => { 
 
     const currentUser = currentUserFixtures.adminUser;
 
