@@ -17,6 +17,7 @@ export default function UCSBOrganizationTable({
         navigate(`/UCSBOrganization/edit/${cell.row.values.orgCode}`)
     }
 
+
     const deleteMutation = useBackendMutation(
         cellToAxiosParamsDelete,
         { onSuccess: onDeleteSuccess },
@@ -57,6 +58,3 @@ export default function UCSBOrganizationTable({
         testid={testIdPrefix}
     />;
 };
-
-
-// HMMMMMMMMM. 
