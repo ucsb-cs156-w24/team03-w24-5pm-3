@@ -40,5 +40,5 @@ ThreeItemsAdminUser.parameters = {
             window.alert("DELETE: " + JSON.stringify(req.url));
             return res(ctx.status(200),ctx.json({}));
         }),
-    ]
+    ] 
 };
