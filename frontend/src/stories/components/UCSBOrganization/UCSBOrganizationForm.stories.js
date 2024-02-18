@@ -1,7 +1,6 @@
 import React from 'react';
 import UCSBOrganizationForm from "main/components/UCSBOrganization/UCSBOrganizationForm"
-import { ucsbOrganizationFixtures } from 'fixtures/ucsbOrganizationFixtures';
-
+import { UCSBOrganizationFixtures } from 'fixtures/UCSBOrganizationFixtures';
 
 export default {
     title: 'components/UCSBOrganization/UCSBOrganizationForm',
@@ -27,7 +26,7 @@ Create.args = {
 export const Update = Template.bind({});
 
 Update.args = {
-    initialContents: ucsbOrganizationFixtures.oneUCSBOrganization[0],
+    initialContents: UCSBOrganizationFixtures.oneOrganization[0],
     buttonLabel: "Update",
     submitAction: (data) => {
         console.log("Submit was clicked with data: ", data); 

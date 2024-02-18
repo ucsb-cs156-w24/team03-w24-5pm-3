@@ -1,5 +1,5 @@
 import { Button, Form } from 'react-bootstrap';
-import { useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom';
 
 function UCSBOrganizationForm({ initialContents, submitAction, buttonLabel = "Create" }) {
@@ -8,10 +8,9 @@ function UCSBOrganizationForm({ initialContents, submitAction, buttonLabel = "Cr
         register,
         formState: { errors },
         handleSubmit,
-    } = useForm({
-        defaultValues: initialContents || {},
-    });
-
+    } = useForm(
+        { defaultValues: initialContents || {}, }
+    );
     const navigate = useNavigate();
 
     const testIdPrefix = "UCSBOrganizationForm";
@@ -19,45 +18,38 @@ function UCSBOrganizationForm({ initialContents, submitAction, buttonLabel = "Cr
     return (
         <Form onSubmit={handleSubmit(submitAction)}>
 
-            {initialContents && (
-                <Form.Group className="mb-3" >
-                    <Form.Label htmlFor="id">Id</Form.Label>
-                    <Form.Control
-                        data-testid={testIdPrefix + "-id"}
-                        id="id"
-                        type="text"
-                        {...register("id")}
-                        value={initialContents.id}
-                        disabled
-                    />
-                </Form.Group>
-            )}
-
-            <Form.Group className="mb-3">
+            <Form.Group className="mb-3" >
                 <Form.Label htmlFor="orgCode">Organization Code</Form.Label>
                 <Form.Control
                     data-testid={testIdPrefix + "-orgCode"}
                     id="orgCode"
                     type="text"
-                    isInvalid={Boolean(errors.orgCode)}
-                    {...register("orgCode", {
-                        required: "Organization Code is required.",
-                    })}
+                {...register("orgCode", {
+                    required: "Organization code is required.",
+                    maxLength : {
+                        value: 5,
+                        message: "Max length 5 characters"
+                    }
+                })}
                 />
-                <Form.Control.Feedback type="invalid">
-                    {errors.orgCode?.message}
-                </Form.Control.Feedback>
+            <Form.Control.Feedback type="invalid">
+                {errors.orgCode?.message}
+            </Form.Control.Feedback>
             </Form.Group>
 
-            <Form.Group className="mb-3">
-                <Form.Label htmlFor="orgTranslationShort">Organization Translation Short</Form.Label>
+            <Form.Group className="mb-3" >
+                <Form.Label htmlFor="orgTranslationShort">Organization Translation (short)</Form.Label>
                 <Form.Control
                     data-testid={testIdPrefix + "-orgTranslationShort"}
                     id="orgTranslationShort"
                     type="text"
                     isInvalid={Boolean(errors.orgTranslationShort)}
                     {...register("orgTranslationShort", {
-                        required: "Organization Translation Short is required.",
+                        required: "Shortened organization translation is required.",
+                        maxLength : {
+                            value: 50,
+                            message: "Max length 50 characters"
+                        }
                     })}
                 />
                 <Form.Control.Feedback type="invalid">
@@ -65,15 +57,15 @@ function UCSBOrganizationForm({ initialContents, submitAction, buttonLabel = "Cr
                 </Form.Control.Feedback>
             </Form.Group>
 
-            <Form.Group className="mb-3">
+            <Form.Group className="mb-3" >
                 <Form.Label htmlFor="orgTranslation">Organization Translation</Form.Label>
                 <Form.Control
                     data-testid={testIdPrefix + "-orgTranslation"}
                     id="orgTranslation"
                     type="text"
-                    isInvalid={Boolean(errors.orgTranslation)}
+                    isInvalid={Boolean(errors.description)}
                     {...register("orgTranslation", {
-                        required: "Organization Translation is required.",
+                        required: "Organization translation is required."
                     })}
                 />
                 <Form.Control.Feedback type="invalid">
@@ -81,14 +73,16 @@ function UCSBOrganizationForm({ initialContents, submitAction, buttonLabel = "Cr
                 </Form.Control.Feedback>
             </Form.Group>
 
-            <Form.Group className="mb-3">
+            <Form.Group className="mb-3" >
+                <Form.Label htmlFor="inactive">Inactive</Form.Label>
                 <Form.Check
-                    type="checkbox"
-                    label="Inactive"
+                    data-testid={testIdPrefix + "-inactive"}
                     id="inactive"
+                    type="checkbox"
                     {...register("inactive")}
                 />
             </Form.Group>
+
 
             <Button
                 type="submit"
@@ -103,8 +97,10 @@ function UCSBOrganizationForm({ initialContents, submitAction, buttonLabel = "Cr
             >
                 Cancel
             </Button>
+
         </Form>
-    );
+
+    )
 }
 
-export default UCSBOrganizationForm;
+export default UCSBOrganizationForm; 
