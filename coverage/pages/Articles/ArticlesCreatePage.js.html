@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for pages/UCSBDates/UCSBDatesCreatePage.js</title>
+    <title>Code coverage report for pages/Articles/ArticlesCreatePage.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">pages/UCSBDates</a> UCSBDatesCreatePage.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">pages/Articles</a> ArticlesCreatePage.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -112,7 +112,8 @@
 <a name='L47'></a><a href='#L47'>47</a>
 <a name='L48'></a><a href='#L48'>48</a>
 <a name='L49'></a><a href='#L49'>49</a>
-<a name='L50'></a><a href='#L50'>50</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -121,6 +122,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -160,34 +163,35 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
-import UCSBDateForm from "main/components/UCSBDates/UCSBDateForm";
+import RestaurantForm from "main/components/Articles/ArticlesForm";
 import { Navigate } from 'react-router-dom'
 import { useBackendMutation } from "main/utils/useBackend";
 import { toast } from "react-toastify";
 &nbsp;
-export default function UCSBDatesCreatePage({storybook=false}) {
+export default function ArticlesCreatePage({storybook=false}) {
 &nbsp;
-  const objectToAxiosParams = (ucsbDate) =&gt; ({
-    url: "/api/ucsbdates/post",
+  const objectToAxiosParams = (article) =&gt; ({
+    url: "/api/articles/post",
     method: "POST",
     params: {
-      quarterYYYYQ: ucsbDate.quarterYYYYQ,
-      name: ucsbDate.name,
-      localDateTime: ucsbDate.localDateTime
+     title: article.title,
+     url: article.url,
+     explanation: article.explanation,
+     email: article.email,
+     dateAdded: article.dateAdded
     }
   });
 &nbsp;
-  const onSuccess = (ucsbDate) =&gt; {
-    toast(`New ucsbDate Created - id: ${ucsbDate.id} name: ${ucsbDate.name}`);
+  const onSuccess = (article) =&gt; {
+    toast(`New article Created - id: ${article.id} title: ${article.title}`);
   }
 &nbsp;
   const mutation = useBackendMutation(
     objectToAxiosParams,
      { onSuccess }, 
      // Stryker disable next-line all : hard to set up test for caching
-     ["/api/ucsbdates/all"]
+     ["/api/articles/all"] // mutation makes this key stale so that pages relying on it reload
      );
 &nbsp;
   const { isSuccess } = mutation
@@ -197,20 +201,19 @@ export default function UCSBDatesCreatePage({storybook=false}) {
   }
 &nbsp;
   if (isSuccess &amp;&amp; !storybook) {
-    return &lt;Navigate to="/ucsbdates" /&gt;
+    return &lt;Navigate to="/articles" /&gt;
   }
 &nbsp;
   return (
     &lt;BasicLayout&gt;
       &lt;div className="pt-2"&gt;
-        &lt;h1&gt;Create New UCSBDate&lt;/h1&gt;
-&nbsp;
-        &lt;UCSBDateForm submitAction={onSubmit} /&gt;
-&nbsp;
+        &lt;h1&gt;Create New Articles&lt;/h1&gt;
+        &lt;RestaurantForm submitAction={onSubmit} /&gt;
       &lt;/div&gt;
     &lt;/BasicLayout&gt;
   )
-}</pre></td></tr></table></pre>
+}
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
