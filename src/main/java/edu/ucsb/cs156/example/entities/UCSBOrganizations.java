@@ -12,11 +12,11 @@ import lombok.Builder;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity(name = "ucsborganizations")
-public class UCSBOrganizations {
-    @Id
-    private String orgCode;
-    private String orgTranslationShort;
-    private String orgTranslation;
-    private boolean inactive;
+@Entity(name = "ucsborganization")
+public class UCSBOrganization {
+  @Id
+  private String orgCode;
+  private String orgTranslationShort;
+  private String orgTranslation;
+  private boolean inactive;
 }
