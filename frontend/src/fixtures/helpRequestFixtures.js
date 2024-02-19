@@ -1,5 +1,6 @@
 const helpRequestFixtures = {
     oneRequest: {
+        "id": 1,
         "requesterEmail": "bendover@ucsb.edu",
         "teamId": "s22-5pm-3",
         "tableOrBreakoutRoom": "7",
@@ -9,6 +10,7 @@ const helpRequestFixtures = {
     },
     threeRequests: [
         {
+            "id": 2,
             "requesterEmail": "bendover@ucsb.edu",
             "teamId": "s22-5pm-3",
             "tableOrBreakoutRoom": "7",
@@ -17,6 +19,7 @@ const helpRequestFixtures = {
             "solved": false
         },
         {
+            "id": 3,
             "requesterEmail": "bendover2@ucsb.edu",
             "teamId": "s22-5pm-4",
             "tableOrBreakoutRoom": "8",
@@ -25,6 +28,7 @@ const helpRequestFixtures = {
             "solved": false
         },
         {
+            "id": 4,
             "requesterEmail": "bendover3@ucsb.edu",
             "teamId": "s22-5pm-5",
             "tableOrBreakoutRoom": "9",

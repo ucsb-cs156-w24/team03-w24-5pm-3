@@ -51,8 +51,7 @@ function HelpRequestForm({ initialContents, submitAction, buttonLabel = "Create"
                             })}
                         />
                         <Form.Control.Feedback type="invalid">
-                            {errors.RequesterEmail && 'Requester Email is required.'}
-                            {errors.RequesterEmail?.type === 'pattern' && ' Requester Email must be a valid email.'}
+                            {errors.RequesterEmail && 'Requester Email is required. Requester Email must be a valid email.'}
                         </Form.Control.Feedback>
                     </Form.Group>
                 </Col>
@@ -73,8 +72,7 @@ function HelpRequestForm({ initialContents, submitAction, buttonLabel = "Create"
                             })}
                         />
                         <Form.Control.Feedback type="invalid">
-                            {errors.TeamId && 'Team ID is required. '}
-                            {errors.TeamId?.type === 'pattern' && 'Team ID must be in the format QYY-section_time-group, e.g. s22-5pm-3 for Spring 2022, 5pm, Group 3.'}
+                            {errors.TeamId && 'Team ID is required. Team ID must be a valid team id.'}
                         </Form.Control.Feedback>
                     </Form.Group>
                 </Col>
@@ -116,7 +114,6 @@ function HelpRequestForm({ initialContents, submitAction, buttonLabel = "Create"
                         />
                         <Form.Control.Feedback type="invalid">
                             {errors.RequestTime && 'Request Time is required and must be provided in ISO format.'}
-                            {errors.RequestTime?.type === 'pattern'}
                         </Form.Control.Feedback>
                     </Form.Group>
                 </Col>
