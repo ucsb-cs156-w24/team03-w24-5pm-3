@@ -60,12 +60,12 @@ describe("HelpRequestCreatePage tests", () => {
             requesterEmail: "bendover@ucsb.edu",
             teamId: "s22-5pm-3",
             tableOrBreakoutRoom: "7",
-            explanation: "Need help with Swagger-ui",
             requestTime: "2022-01-02T12:00:00",
+            explanation: "Need help with Swagger-ui",
             solved: false
         };
 
-        axiosMock.onPost("/api/helprequest/post").reply(202, helpRequest);
+        axiosMock.onPost("/api/HelpRequest/post").reply(202, helpRequest);
 
         render(
             <QueryClientProvider client={queryClient}>
@@ -73,45 +73,44 @@ describe("HelpRequestCreatePage tests", () => {
                     <HelpRequestCreatePage />
                 </MemoryRouter>
             </QueryClientProvider>
-        );
+        )
 
         await waitFor(() => {
             expect(screen.getByLabelText("Requester Email")).toBeInTheDocument();
         });
 
         const requesterEmailInput = screen.getByLabelText("Requester Email");
-        expect (requesterEmailInput).toBeInTheDocument();
+        expect(requesterEmailInput).toBeInTheDocument();
 
         const teamIdInput = screen.getByLabelText("Team ID");
-        expect (teamIdInput).toBeInTheDocument();
+        expect(teamIdInput).toBeInTheDocument();
 
-        const tableOrBreakoutRoomInput = screen.getByLabelText("Table Or Breakout Room");
-        expect (tableOrBreakoutRoomInput).toBeInTheDocument();
+        const tableOrBreakoutRoomInput = screen.getByLabelText("Table or Breakout Room");
+        expect(tableOrBreakoutRoomInput).toBeInTheDocument();
+
+        const requestTimeInput = screen.getByLabelText("Request Time (iso format)");
+        expect(requestTimeInput).toBeInTheDocument();
 
         const explanationInput = screen.getByLabelText("Explanation");
-        expect (explanationInput).toBeInTheDocument();
+        expect(explanationInput).toBeInTheDocument();
 
-        const requestTimeInput = screen.getByLabelText("Request Time");
-        expect (requestTimeInput).toBeInTheDocument();
-
-        const solvedInput = screen.getByLabelText("Solved?");
-        expect (solvedInput).toBeInTheDocument();
+        const solvedInput = screen.getByLabelText("Solved");
+        expect(solvedInput).toBeInTheDocument();
 
         const createButton = screen.getByText("Create");
-        expect (createButton).toBeInTheDocument();
+        expect(createButton).toBeInTheDocument();
 
-        fireEvent.change(requesterEmailInput, { target: { value: 'bendover@ucsb.edu' } });
-        fireEvent.change(teamIdInput, { target: { value: 's22-5pm-3' } });
-        fireEvent.change(tableOrBreakoutRoomInput, { target: { value: '7' } });
-        fireEvent.change(explanationInput, { target: { value: 'Need help with Swagger-ui' } });
-        fireEvent.change(requestTimeInput, { target: { value: '2022-01-02T12:00:00' } });
-        fireEvent.change(solvedInput, { target: { value: false } });
+        fireEvent.change(requesterEmailInput, { target: { value: 'bendover@ucsb.edu' } })
+        fireEvent.change(teamIdInput, { target: { value: 's22-5pm-3' } })
+        fireEvent.change(tableOrBreakoutRoomInput, { target: { value: '7' } })
+        fireEvent.change(requestTimeInput, { target: { value: '2022-01-02T12:00:00' } })
+        fireEvent.change(explanationInput, { target: { value: 'Need help with Swagger-ui' } })
+        fireEvent.change(solvedInput, { target: { value: false } })
         fireEvent.click(createButton);
 
         await waitFor(() => expect(axiosMock.history.post.length).toBe(1));
 
-        expect(axiosMock.history.post[0].params).toEqual(
-            {
+        expect(axiosMock.history.post[0].params).toEqual({
             requesterEmail: "bendover@ucsb.edu",
             teamId: "s22-5pm-3",
             tableOrBreakoutRoom: "7",
@@ -120,10 +119,9 @@ describe("HelpRequestCreatePage tests", () => {
             solved: false
         });
 
-        expect(mockToast).toBeCalledWith("New Help Request Created - id: 1 requesterEmail: bendover@ucsb.edu teamId: s22-5pm-3 tableOrBreakoutRoom: 7 explanation: Need help with Swagger-ui requestTime: 2022-01-02T12:00:00 solved: false");
+        // assert - check that the toast was called with the expected message
+        expect(mockToast).toBeCalledWith("New Help Request Created - id: 1 requesterEmail: bendover@ucsb.edu teamId: s22-5pm-3 tableOrBreakoutRoom: 7 requestTime: 22022-01-02T12:00:00 explanation: Need help with Swagger-ui solved: false");
         expect(mockNavigate).toBeCalledWith({ "to": "/helprequest" });
     });
-
 });
-
 

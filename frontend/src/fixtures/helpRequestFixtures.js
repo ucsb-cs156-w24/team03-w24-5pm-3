@@ -13,7 +13,7 @@ const helpRequestFixtures = {
             "id": 2,
             "requesterEmail": "bendover@ucsb.edu",
             "teamId": "s22-5pm-3",
-            "tableOrBreakoutRoom": "7",
+            "tableOrBreakoutRoom": "6",
             "explanation": "Need help with Swagger-ui",
             "requestTime": "2022-01-02T12:00:00",
             "solved": false

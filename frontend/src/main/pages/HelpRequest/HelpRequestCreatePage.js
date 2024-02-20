@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 export default function HelpRequestCreatePage({storybook=false}) {
 
   const objectToAxiosParams = (helpRequest) => ({
-    url: "/api/helprequest/post",
+    url: "/api/HelpRequest/post",
     method: "POST",
     params: {
      requesterEmail: helpRequest.requesterEmail,
@@ -27,7 +27,7 @@ export default function HelpRequestCreatePage({storybook=false}) {
     objectToAxiosParams,
      { onSuccess }, 
      // Stryker disable next-line all : hard to set up test for caching
-     ["/api/helprequest/all"] // mutation makes this key stale so that pages relying on it reload
+     ["/api/HelpRequest/all"] // mutation makes this key stale so that pages relying on it reload
      );
 
   const { isSuccess } = mutation
@@ -37,7 +37,7 @@ export default function HelpRequestCreatePage({storybook=false}) {
   }
 
   if (isSuccess && !storybook) {
-    return <Navigate to="/HelpRequest" />
+    return <Navigate to="/helprequest" />
   }
 
   return (
