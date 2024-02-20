@@ -20,8 +20,10 @@ function RecommendationRequestForm({ initialContents, submitAction, buttonLabel 
     // Note that even this complex regex may still need some tweaks
 
     // Stryker disable next-line Regex UCSB DATES HERITAGE to process the date
+    // Stryker disable next-line Regex
     const isodate_regex = /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d)/i;
     //Email Regex processor
+    // Stryker disable next-line Regex
     const email_regex = /[a-z0-9]+@[a-z]+.[a-z]{2,3}/;
 
     // Stryker disable next-line all MORE LEGACY CODE
