@@ -98,10 +98,10 @@ describe("RecommendationRequestForm tests", () => {
         fireEvent.click(submitButton);
 
         await screen.findByText(/Requester email must be a valid email address./);
-        expect(screen.queryByText(/Date Requested is required in ISO format./)).toBeInTheDocument();
-        expect(screen.queryByText(/Date Needed is required in ISO format./)).toBeInTheDocument();
-        expect(screen.queryByText(/Professor email must be a valid email address./)).toBeInTheDocument();
-        expect(screen.queryByText(/Requester email must be a valid email address./)).toBeInTheDocument();
+        expect(screen.getByText(/Date Requested is required in ISO format./)).toBeInTheDocument();
+        expect(screen.getByText(/Date Needed is required in ISO format./)).toBeInTheDocument();
+        expect(screen.getByText(/Professor email must be a valid email address./)).toBeInTheDocument();
+        expect(screen.getByText(/Requester email must be a valid email address./)).toBeInTheDocument();
     });
 
     test("More regex tests for email", async () => {
