@@ -123,7 +123,7 @@ function RecommendationRequestForm({ initialContents, submitAction, buttonLabel 
                 </Form.Group>
 
                 <Form.Group className="mb-3" >
-                    <Form.Label htmlFor="done">Done?(iso format)</Form.Label>
+                    <Form.Label htmlFor="done">Done?</Form.Label>
                     <Form.Control
                         data-testid="RecommendationRequestForm-done"
                         id="done"
