@@ -62,7 +62,7 @@ describe("RecommendationRequestCreatePage tests", () => {
             explanation: "BS/MS",
             dateRequested: "2022-04-20T00:00",
             dateNeeded: "2022-05-01T00:00",
-            done: "false"
+            done: false
 
         };
 
@@ -94,7 +94,7 @@ describe("RecommendationRequestCreatePage tests", () => {
         fireEvent.change(explanation, { target: { value: 'BS/MS' } });
         fireEvent.change(dateRequested, { target: { value: '2022-04-20T00:00' } });
         fireEvent.change(dateNeeded, { target: { value: '2022-05-01T00:00' } });
-        fireEvent.change(done, { target: { value: 'false' } });
+        fireEvent.change(done, { target: { value: false } });
 
         expect(submitButton).toBeInTheDocument();
 
@@ -110,7 +110,7 @@ describe("RecommendationRequestCreatePage tests", () => {
                 "explanation": "BS/MS",
                 "dateRequested": "2022-04-20T00:00",
                 "dateNeeded": "2022-05-01T00:00",
-                "done": "false"
+                "done": false
             });
 
         expect(mockToast).toBeCalledWith("New recommendationRequest Created - id: 17 requesterEmail: stu17@ucsb.edu");
