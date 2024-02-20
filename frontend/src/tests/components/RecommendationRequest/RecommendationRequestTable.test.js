@@ -28,7 +28,7 @@ describe("RecommendationRequestTable tests", () => {
             </QueryClientProvider>
 
         );
-//[TODO]
+
         const expectedHeaders = ["id", "RequesterEmail", "ProfessorEmail", "Explanation", "DateRequested", "DateNeeded", "Done"];
         const expectedFields = ["id", "requesterEmail", "professorEmail", "explanation", "dateRequested", "dateNeeded", "done"];
         const testId = "RecommendationRequestTable";
@@ -67,7 +67,7 @@ describe("RecommendationRequestTable tests", () => {
             </QueryClientProvider>
 
         );
-//[TODO]
+
         const expectedHeaders = ["id", "RequesterEmail", "ProfessorEmail", "Explanation", "DateRequested", "DateNeeded", "Done"];
         const expectedFields = ["id", "requesterEmail", "professorEmail", "explanation", "dateRequested", "dateNeeded", "done"];
         const testId = "RecommendationRequestTable";
