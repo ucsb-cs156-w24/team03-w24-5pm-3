@@ -37,22 +37,25 @@ describe("ArticlesForm tests", () => {
     });
 
 
-    // test("Correct Error messsages on bad input", async () => {
+    test("Correct Error messsages on bad input", async () => {
 
-    //     render(
-    //         <Router  >
-    //             <ArticlesForm />
-    //         </Router>
-    //     );
-    //     await screen.findByTestId("ArticlesForm-dateAdded");
-    //     const dateAddedField = screen.getByTestId("ArticlesForm-dateAdded");
-    //     const submitButton = screen.getByTestId("ArticlesForm-submit");
+        render(
+            <Router  >
+                <ArticlesForm />
+            </Router>
+        );
+        await screen.findByTestId("ArticlesForm-url");
+        const urlField = screen.getByTestId("ArticlesForm-url");
+        const emailField = screen.getByTestId("ArticlesForm-email");
+        const submitButton = screen.getByTestId("ArticlesForm-submit");
 
-    //     fireEvent.change(dateAddedField, { target: { value: 'bad-input' } });
-    //     fireEvent.click(submitButton);
+        fireEvent.change(urlField, { target: { value: 'bad-input' } });
+        fireEvent.change(emailField, { target: { value: 'bad-input' } });
+        fireEvent.click(submitButton);
 
-    //     await screen.findByText(/QuarterYYYYQ must be in the format YYYYQ/);
-    // });
+        await screen.findByText(/URL must be a valid link./);
+        expect(screen.getByText(/Email must be a valid email./)).toBeInTheDocument();
+    });
 
     test("Correct Error messsages on missing input", async () => {
 
@@ -102,8 +105,8 @@ describe("ArticlesForm tests", () => {
 
         await waitFor(() => expect(mockSubmitAction).toHaveBeenCalled());
 
-        // expect(screen.queryByText(/QuarterYYYYQ must be in the format YYYYQ/)).not.toBeInTheDocument();
-        expect(screen.queryByText(/localDateTime must be in ISO format/)).not.toBeInTheDocument();
+        expect(screen.queryByText(/URL must be a valid link./)).not.toBeInTheDocument();
+        expect(screen.queryByText(/Email must be a valid email./)).not.toBeInTheDocument();
 
     });
 
