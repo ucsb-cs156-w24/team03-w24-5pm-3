@@ -33,12 +33,12 @@ describe("RecommendationRequestCreatePage tests", () => {
 
     const axiosMock = new AxiosMockAdapter(axios);
 
-    beforeEach = () => {
+    beforeEach(() => {
         axiosMock.reset();
         axiosMock.resetHistory();
         axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
         axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
-    };
+    });
 
 
     test("renders without crashing", () => {
