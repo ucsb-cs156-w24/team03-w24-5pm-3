@@ -115,12 +115,12 @@ describe("HelpRequestCreatePage tests", () => {
             teamId: "s22-5pm-3",
             tableOrBreakoutRoom: "7",
             explanation: "Need help with Swagger-ui",
-            requestTime: "2022-01-02T12:00:00",
+            requestTime: "2022-01-02T12:00",
             solved: false
         });
 
         // assert - check that the toast was called with the expected message
-        expect(mockToast).toBeCalledWith("New Help Request Created - id: 1 requesterEmail: bendover@ucsb.edu teamId: s22-5pm-3 tableOrBreakoutRoom: 7 requestTime: 22022-01-02T12:00:00 explanation: Need help with Swagger-ui solved: false");
+        expect(mockToast).toBeCalledWith("New Help Request Created - id: 1 requesterEmail: bendover@ucsb.edu teamId: s22-5pm-3 tableOrBreakoutRoom: 7 requestTime: 2022-01-02T12:00:00 explanation: Need help with Swagger-ui solved: false");
         expect(mockNavigate).toBeCalledWith({ "to": "/helprequest" });
     });
 });
