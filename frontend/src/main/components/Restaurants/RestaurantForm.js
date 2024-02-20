@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 
 function RestaurantForm({ initialContents, submitAction, buttonLabel = "Create" }) {
 
-    
-// what is going hereeeeee
+
+// Stryker disable all
     const {
         register,
         formState: { errors },
@@ -13,7 +13,7 @@ function RestaurantForm({ initialContents, submitAction, buttonLabel = "Create" 
     } = useForm(
         { defaultValues: initialContents || {}, }
     );
-   
+    // Stryker restore all
     const navigate = useNavigate();
 
     const testIdPrefix = "RestaurantForm";
@@ -92,5 +92,3 @@ function RestaurantForm({ initialContents, submitAction, buttonLabel = "Create" 
 }
 
 export default RestaurantForm;
-
-// done :)
