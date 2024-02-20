@@ -21,6 +21,8 @@ function ArticlesForm({ initialContents, submitAction, buttonLabel = "Create" })
 
     // Stryker disable next-line Regex
     const isodate_regex = /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d)/i;
+    const url_regex = /^[a-zA-Z0-9]+([.][a-zA-Z]{2,})+$/;
+    const email_regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
     return (
 
@@ -75,11 +77,12 @@ function ArticlesForm({ initialContents, submitAction, buttonLabel = "Create" })
                             type="text"
                             isInvalid={Boolean(errors.url)}
                             {...register("url", {
-                                required: "URL is required."
+                                required: "URL is required.", pattern: url_regex
                             })}
                         />
                         <Form.Control.Feedback type="invalid">
                             {errors.url?.message}
+                            {errors.url?.type === 'pattern' && 'URL must be a valid link.'}
                         </Form.Control.Feedback>
                     </Form.Group>
                 </Col>
@@ -115,11 +118,12 @@ function ArticlesForm({ initialContents, submitAction, buttonLabel = "Create" })
                             type="text"
                             isInvalid={Boolean(errors.email)}
                             {...register("email", {
-                                required: "Email is required."
+                                required: "Email is required.", pattern: email_regex
                             })}
                         />
                         <Form.Control.Feedback type="invalid">
                             {errors.email?.message}
+                            {errors.email?.type === 'pattern' && 'Email must be a valid email.'}
                         </Form.Control.Feedback>
                     </Form.Group>
                 </Col>
