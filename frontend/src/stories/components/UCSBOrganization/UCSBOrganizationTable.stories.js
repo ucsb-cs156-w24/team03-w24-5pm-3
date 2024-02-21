@@ -1,6 +1,6 @@
 import React from 'react';
-import UCSBOrganizationTable from 'main/components/UCSBOrganization/UCSBOrganizationTable';
-import { UCSBOrganizationFixtures as ucsbOrganizationFixtures } from 'fixtures/UCSBOrganizationFixtures';
+import UCSBOrganizationTable from "main/components/UCSBOrganization/UCSBOrganizationTable";
+import { ucsbOrganizationFixtures } from 'fixtures/ucsbOrganizationFixtures';
 import { currentUserFixtures } from 'fixtures/currentUserFixtures';
 import { rest } from "msw";
 
@@ -24,21 +24,21 @@ Empty.args = {
 export const ThreeItemsOrdinaryUser = Template.bind({});
 
 ThreeItemsOrdinaryUser.args = {
-    organizations: UCSBOrganizationFixtures.threeOrganizations,
+    organizations: ucsbOrganizationFixtures.threeOrganization,
     currentUser: currentUserFixtures.userOnly,
 };
 
 export const ThreeItemsAdminUser = Template.bind({});
 ThreeItemsAdminUser.args = {
-    organizations: UCSBOrganizationFixtures.threeOrganizations,
+    organizations: ucsbOrganizationFixtures.threeOrganization,
     currentUser: currentUserFixtures.adminUser,
 }
 
 ThreeItemsAdminUser.parameters = {
     msw: [
-        rest.delete('/api/UCSBOrganization', (req, res, ctx) => {
+        rest.delete('/api/ucsborganization', (req, res, ctx) => {
             window.alert("DELETE: " + JSON.stringify(req.url));
             return res(ctx.status(200),ctx.json({}));
         }),
-    ] 
+    ]
 };

@@ -1,7 +1,7 @@
 import { fireEvent, render, waitFor, screen } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
-import UCSBOrganizationEditForm from "main/pages/UCSBOrganization/UCSBOrganizationEditPage";
+import UCSBOrganizationEditPage from "main/pages/UCSBOrganization/UCSBOrganizationEditPage";
 
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
@@ -26,7 +26,7 @@ jest.mock('react-router-dom', () => {
         __esModule: true,
         ...originalModule,
         useParams: () => ({
-            orgCode: "SKY"
+            orgCode: "VSA"
         }),
         Navigate: (x) => { mockNavigate(x); return null; }
     };
@@ -43,7 +43,7 @@ describe("UCSBOrganizationEditPage tests", () => {
             axiosMock.resetHistory();
             axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
             axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
-            axiosMock.onGet("/api/UCSBOrganization", { params: { orgCode: "SKY" } }).timeout();
+            axiosMock.onGet("/api/ucsborganization", { params: { orgCode : "VSA" } }).timeout();
         });
 
         const queryClient = new QueryClient();
@@ -54,11 +54,11 @@ describe("UCSBOrganizationEditPage tests", () => {
             render(
                 <QueryClientProvider client={queryClient}>
                     <MemoryRouter>
-                        <UCSBOrganizationEditForm />
+                        <UCSBOrganizationEditPage />
                     </MemoryRouter>
                 </QueryClientProvider>
             );
-            await screen.findByText("Edit Organization");
+            await screen.findByText("Edit UCSBOrganization");
             expect(screen.queryByTestId("UCSBOrganization-orgCode")).not.toBeInTheDocument();
             restoreConsole();
         });
@@ -73,28 +73,28 @@ describe("UCSBOrganizationEditPage tests", () => {
             axiosMock.resetHistory();
             axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
             axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
-            axiosMock.onGet("/api/UCSBOrganization", { params: { orgCode: "SKY" } }).reply(200, {
-                orgCode: "SKY",
-                orgTranslationShort: "SKYDIVING CLUB",
-                orgTranslation: "SKYDIVING CLUB AT UCSB",
-                inactive: false
+            axiosMock.onGet("/api/ucsborganization", { params: { orgCode : "VSA" } }).reply(200, {
+                orgCode: "VSA",
+                orgTranslationShort: "VIET STU ASSC",
+                orgTranslation: "VIETNAMESE STUDENT ASSOCIATION",
+                inactive: "false"
             });
-            axiosMock.onPut('/api/UCSBOrganization').reply(200, {
-                orgCode: "SKY",
-                orgTranslationShort: "SKYWATCHING CLUB",
-                orgTranslation: "SKYWATCHING CLUB AT UCSB",
-                inactive: true
+            axiosMock.onPut('/api/ucsborganization').reply(200, {
+                orgCode: "VSA1",
+                orgTranslationShort: "ASSC VIET STU",
+                orgTranslation: "ASSOCIATION FOR VIETNAMESE STUDENTS",
+                inactive: "true"
             });
         });
 
         const queryClient = new QueryClient();
-
+    
         test("Is populated with the data provided", async () => {
 
             render(
                 <QueryClientProvider client={queryClient}>
                     <MemoryRouter>
-                        <UCSBOrganizationEditForm />
+                        <UCSBOrganizationEditPage />
                     </MemoryRouter>
                 </QueryClientProvider>
             );
@@ -104,37 +104,39 @@ describe("UCSBOrganizationEditPage tests", () => {
             const orgCodeField = screen.getByTestId("UCSBOrganizationForm-orgCode");
             const orgTranslationShortField = screen.getByTestId("UCSBOrganizationForm-orgTranslationShort");
             const orgTranslationField = screen.getByTestId("UCSBOrganizationForm-orgTranslation");
-            const inactiveCheck = screen.getByTestId("UCSBOrganizationForm-inactive");
+            const inactiveField = screen.getByTestId("UCSBOrganizationForm-inactive");
             const submitButton = screen.getByTestId("UCSBOrganizationForm-submit");
 
             expect(orgCodeField).toBeInTheDocument();
-            expect(orgCodeField).toHaveValue("SKY");
+            expect(orgCodeField).toHaveValue("VSA");
             expect(orgTranslationShortField).toBeInTheDocument();
-            expect(orgTranslationShortField).toHaveValue("SKYDIVING CLUB");
+            expect(orgTranslationShortField).toHaveValue("VIET STU ASSC");
             expect(orgTranslationField).toBeInTheDocument();
-            expect(orgTranslationField).toHaveValue("SKYDIVING CLUB AT UCSB");
-            expect(inactiveCheck).toBeInTheDocument();
-            expect(inactiveCheck).not.toBeChecked();
+            expect(orgTranslationField).toHaveValue("VIETNAMESE STUDENT ASSOCIATION");
+            expect(inactiveField).toBeInTheDocument();
+            expect(inactiveField).toHaveValue("false");
 
             expect(submitButton).toHaveTextContent("Update");
 
-            fireEvent.change(orgTranslationShortField, { target: { value: 'SKYWATCHING CLUB' } });
-            fireEvent.change(orgTranslationField, { target: { value: 'SKYWATCHING CLUB AT UCSB' } });
-            fireEvent.click(inactiveCheck);
+            fireEvent.change(orgCodeField, { target: { value: 'VSA1' } });
+            fireEvent.change(orgTranslationShortField, { target: { value: 'ASSC VIET STU' } });
+            fireEvent.change(orgTranslationField, { target: { value: 'ASSOCIATION FOR VIETNAMESE STUDENTS' } });
+            fireEvent.change(inactiveField, { target: { value: 'true' } });
             fireEvent.click(submitButton);
 
             await waitFor(() => expect(mockToast).toBeCalled());
-            expect(mockToast).toBeCalledWith("Organization Updated - orgCode: SKY orgTranslationShort: SKYWATCHING CLUB");
-
-            expect(mockNavigate).toBeCalledWith({ "to": "/UCSBOrganization" });
+            expect(mockToast).toBeCalledWith("UCSBOrganization Updated - orgCode: VSA1 orgTranslationShort: ASSC VIET STU orgTranslation: ASSOCIATION FOR VIETNAMESE STUDENTS inactive: true");
+            
+            expect(mockNavigate).toBeCalledWith({ "to": "/ucsborganization" });
 
             expect(axiosMock.history.put.length).toBe(1); // times called
-            expect(axiosMock.history.put[0].params).toEqual({ orgCode: "SKY" });
+            expect(axiosMock.history.put[0].params).toEqual({ orgCode : "VSA1" });
             expect(axiosMock.history.put[0].data).toBe(JSON.stringify({
-                orgTranslationShort: 'SKYWATCHING CLUB',
-                orgTranslation: 'SKYWATCHING CLUB AT UCSB',
-                inactive: true
-            })); 
+                orgCode: "VSA1",
+                orgTranslationShort: "ASSC VIET STU",
+                orgTranslation: "ASSOCIATION FOR VIETNAMESE STUDENTS",
+                inactive: "true"
+            })); // posted object
 
 
         });
@@ -144,7 +146,7 @@ describe("UCSBOrganizationEditPage tests", () => {
             render(
                 <QueryClientProvider client={queryClient}>
                     <MemoryRouter>
-                        <UCSBOrganizationEditForm />
+                        <UCSBOrganizationEditPage />
                     </MemoryRouter>
                 </QueryClientProvider>
             );
@@ -154,26 +156,31 @@ describe("UCSBOrganizationEditPage tests", () => {
             const orgCodeField = screen.getByTestId("UCSBOrganizationForm-orgCode");
             const orgTranslationShortField = screen.getByTestId("UCSBOrganizationForm-orgTranslationShort");
             const orgTranslationField = screen.getByTestId("UCSBOrganizationForm-orgTranslation");
-            const inactiveCheck = screen.getByTestId("UCSBOrganizationForm-inactive");
+            const inactiveField = screen.getByTestId("UCSBOrganizationForm-inactive");
             const submitButton = screen.getByTestId("UCSBOrganizationForm-submit");
 
-            expect(orgCodeField).toHaveValue("SKY");
-            expect(orgTranslationShortField).toHaveValue("SKYDIVING CLUB");
-            expect(orgTranslationField).toHaveValue("SKYDIVING CLUB AT UCSB");
-            expect(inactiveCheck).not.toBeChecked();
-            expect(submitButton).toBeInTheDocument();
+            expect(orgCodeField).toBeInTheDocument();
+            expect(orgCodeField).toHaveValue("VSA");
+            expect(orgTranslationShortField).toBeInTheDocument();
+            expect(orgTranslationShortField).toHaveValue("VIET STU ASSC");
+            expect(orgTranslationField).toBeInTheDocument();
+            expect(orgTranslationField).toHaveValue("VIETNAMESE STUDENT ASSOCIATION");
+            expect(inactiveField).toBeInTheDocument();
+            expect(inactiveField).toHaveValue("false");
 
-            fireEvent.change(orgTranslationShortField, { target: { value: 'SKYWATCHING CLUB' } })
-            fireEvent.change(orgTranslationField, { target: { value: 'SKYWATCHING CLUB AT UCSB' } })
-            fireEvent.click(inactiveCheck);
+            fireEvent.change(orgCodeField, { target: { value: 'VSA1' } });
+            fireEvent.change(orgTranslationShortField, { target: { value: 'ASSC VIET STU' } });
+            fireEvent.change(orgTranslationField, { target: { value: 'ASSOCIATION FOR VIETNAMESE STUDENTS' } });
+            fireEvent.change(inactiveField, { target: { value: 'true' } });
 
             fireEvent.click(submitButton);
 
             await waitFor(() => expect(mockToast).toBeCalled());
-            expect(mockToast).toBeCalledWith("Organization Updated - orgCode: SKY orgTranslationShort: SKYWATCHING CLUB");
-            expect(mockNavigate).toBeCalledWith({ "to": "/UCSBOrganization" });
+            expect(mockToast).toBeCalledWith("UCSBOrganization Updated - orgCode: VSA1 orgTranslationShort: ASSC VIET STU orgTranslation: ASSOCIATION FOR VIETNAMESE STUDENTS inactive: true");
+            expect(mockNavigate).toBeCalledWith({ "to": "/ucsborganization" });
         });
 
 
+       
     });
 });

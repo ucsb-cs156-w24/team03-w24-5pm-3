@@ -1,6 +1,6 @@
 import { onDeleteSuccess, cellToAxiosParamsDelete } from "main/utils/UCSBOrganizationUtils";
 import mockConsole from "jest-mock-console";
-//brrr
+
 const mockToast = jest.fn();
 jest.mock('react-toastify', () => {
     const originalModule = jest.requireActual('react-toastify');
@@ -16,10 +16,13 @@ describe("UCSBOrganizationUtils", () => {
     describe("onDeleteSuccess", () => {
 
         test("It puts the message on console.log and in a toast", () => {
+            // arrange
             const restoreConsole = mockConsole();
 
+            // act
             onDeleteSuccess("abc");
 
+            // assert
             expect(mockToast).toHaveBeenCalledWith("abc");
             expect(console.log).toHaveBeenCalled();
             const message = console.log.mock.calls[0][0];
@@ -32,16 +35,19 @@ describe("UCSBOrganizationUtils", () => {
     describe("cellToAxiosParamsDelete", () => {
 
         test("It returns the correct params", () => {
-            const cell = { row: { values: { orgCode: "SKY" } } };
+            // arrange
+            const cell = { row: { values: { orgCode: "VSA" } } };
 
+            // act
             const result = cellToAxiosParamsDelete(cell);
 
+            // assert
             expect(result).toEqual({
-                url: "/api/UCSBOrganization",
+                url: "/api/ucsborganization",
                 method: "DELETE",
-                params: { orgCode: "SKY" }
+                params: { orgCode: "VSA" }
             });
         });
 
     });
-});  
+});

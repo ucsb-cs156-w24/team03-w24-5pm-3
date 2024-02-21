@@ -6,15 +6,12 @@ import { cellToAxiosParamsDelete, onDeleteSuccess } from "main/utils/UCSBOrganiz
 import { useNavigate } from "react-router-dom";
 import { hasRole } from "main/utils/currentUser";
 
-export default function UCSBOrganizationTable({
-    organizations,
-    currentUser,
-    testIdPrefix = "UCSBOrganizationTable" }) {
+export default function UCSBOrganizationTable({ organizations, currentUser }) {
 
     const navigate = useNavigate();
 
     const editCallback = (cell) => {
-        navigate(`/UCSBOrganization/edit/${cell.row.values.orgCode}`)
+        navigate(`/ucsborganization/edit/${cell.row.values.orgCode}`)
     }
 
     // Stryker disable all : hard to test for query caching
@@ -22,43 +19,43 @@ export default function UCSBOrganizationTable({
     const deleteMutation = useBackendMutation(
         cellToAxiosParamsDelete,
         { onSuccess: onDeleteSuccess },
-        ["/api/UCSBOrganization/all"]
+        ["/api/ucsborganization/all"]
     );
     // Stryker restore all 
 
     // Stryker disable next-line all : TODO try to make a good test for this
-
     const deleteCallback = async (cell) => { deleteMutation.mutate(cell); }
+
 
     const columns = [
         {
-            Header: 'OrgCode',
-            accessor: 'orgCode', 
+            Header: 'orgCode',
+            accessor: 'orgCode', // accessor is the "key" in the data
         },
-
         {
-            Header: 'OrgTranslationShort',
+            Header: 'orgTranslationShort',
             accessor: 'orgTranslationShort',
         },
         {
-            Header: 'OrgTranslation',
+            Header: 'orgTranslation',
             accessor: 'orgTranslation',
         },
         {
-            Header: 'Inactive',
-            id: 'inactive',
-            accessor: (row, _rowIndex) => String(row.inactive) 
+            Header: 'inactive',
+            accessor: 'inactive',
+            Cell: ({ value }) => value.toString()  // Explicitly convert boolean to string
+
         }
     ];
 
     if (hasRole(currentUser, "ROLE_ADMIN")) {
-        columns.push(ButtonColumn("Edit", "primary", editCallback, testIdPrefix));
-        columns.push(ButtonColumn("Delete", "danger", deleteCallback, testIdPrefix));
+        columns.push(ButtonColumn("Edit", "primary", editCallback, "UCSBOrganizationTable"));
+        columns.push(ButtonColumn("Delete", "danger", deleteCallback, "UCSBOrganizationTable"));
     } 
 
     return <OurTable
         data={organizations}
         columns={columns}
-        testid={testIdPrefix}
+        testid={"UCSBOrganizationTable"}
     />;
 };

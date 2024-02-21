@@ -3,7 +3,7 @@ import UCSBOrganizationIndexPage from "main/pages/UCSBOrganization/UCSBOrganizat
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 import mockConsole from "jest-mock-console";
-import { UCSBOrganizationFixtures as ucsbOrganizationFixtures } from "fixtures/UCSBOrganizationFixtures";
+import { ucsbOrganizationFixtures } from "fixtures/UCSBOrganizationFixtures";
 
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
@@ -45,7 +45,7 @@ describe("UCSBOrganizationIndexPage tests", () => {
 
     test("Renders with Create Button for admin user", async () => {
         setupAdminUser();
-        axiosMock.onGet("/api/UCSBOrganization/all").reply(200, []);
+        axiosMock.onGet("/api/ucsborganization/all").reply(200, []);
 
         render(
             <QueryClientProvider client={queryClient}>
@@ -59,13 +59,13 @@ describe("UCSBOrganizationIndexPage tests", () => {
             expect(screen.getByText(/Create Organization/)).toBeInTheDocument();
         });
         const button = screen.getByText(/Create Organization/);
-        expect(button).toHaveAttribute("href", "/UCSBOrganization/create");
+        expect(button).toHaveAttribute("href", "/ucsborganization/create");
         expect(button).toHaveAttribute("style", "float: right;");
     });
 
     test("renders three organizations correctly for regular user", async () => {
         setupUserOnly();
-        axiosMock.onGet("/api/UCSBOrganization/all").reply(200, UCSBOrganizationFixtures.threeOrganizations);
+        axiosMock.onGet("/api/ucsborganization/all").reply(200, ucsbOrganizationFixtures.threeOrganization);
 
         render(
             <QueryClientProvider client={queryClient}>
@@ -75,19 +75,23 @@ describe("UCSBOrganizationIndexPage tests", () => {
             </QueryClientProvider>
         );
 
-        await waitFor(() => { expect(screen.getByTestId(`${testId}-cell-row-0-col-orgCode`)).toHaveTextContent("SKY"); });
-        expect(screen.getByTestId(`${testId}-cell-row-1-col-orgCode`)).toHaveTextContent("OSLI");
-        expect(screen.getByTestId(`${testId}-cell-row-2-col-orgCode`)).toHaveTextContent("KRC");
+        await waitFor(() => { expect(screen.getByTestId(`${testId}-cell-row-0-col-orgCode`)).toHaveTextContent("VSA"); });
+        expect(screen.getByTestId(`${testId}-cell-row-1-col-orgCode`)).toHaveTextContent("TT");
+        expect(screen.getByTestId(`${testId}-cell-row-2-col-orgCode`)).toHaveTextContent("DEM");
 
         const createOrganizationButton = screen.queryByText("Create Organization");
         expect(createOrganizationButton).not.toBeInTheDocument();
 
-        const orgTranslationShort = screen.getByText("STUDENT LIFE");
+        const orgTranslationShort = screen.getByText("VIET STU ASSC");
         expect(orgTranslationShort).toBeInTheDocument();
 
-        const orgTranslation = screen.getByText("OFFICE OF STUDENT LIFE");
+        const orgTranslation = screen.getByText("VIETNAMESE STUDENT ASSOCIATION");
         expect(orgTranslation).toBeInTheDocument();
 
+        // const inactive = screen.getByText("false");
+        // expect(inactive).toBeInTheDocument();
+
+        // for non-admin users, details button is visible, but the edit and delete buttons should not be visible
         expect(screen.queryByTestId("UCSBOrganizationTable-cell-row-0-col-Delete-button")).not.toBeInTheDocument();
         expect(screen.queryByTestId("UCSBOrganizationTable-cell-row-0-col-Edit-button")).not.toBeInTheDocument();
     });
@@ -95,7 +99,7 @@ describe("UCSBOrganizationIndexPage tests", () => {
     test("renders empty table when backend unavailable, user only", async () => {
         setupUserOnly();
 
-        axiosMock.onGet("/api/UCSBOrganization/all").timeout();
+        axiosMock.onGet("/api/ucsborganization/all").timeout();
 
         const restoreConsole = mockConsole();
 
@@ -108,9 +112,9 @@ describe("UCSBOrganizationIndexPage tests", () => {
         );
 
         await waitFor(() => { expect(axiosMock.history.get.length).toBeGreaterThanOrEqual(1); });
-
+        
         const errorMessage = console.error.mock.calls[0][0];
-        expect(errorMessage).toMatch("Error communicating with backend via GET on /api/UCSBOrganization/all");
+        expect(errorMessage).toMatch("Error communicating with backend via GET on /api/ucsborganization/all");
         restoreConsole();
 
     });
@@ -118,8 +122,8 @@ describe("UCSBOrganizationIndexPage tests", () => {
     test("what happens when you click delete, admin", async () => {
         setupAdminUser();
 
-        axiosMock.onGet("/api/UCSBOrganization/all").reply(200, UCSBOrganizationFixtures.threeOrganizations);
-        axiosMock.onDelete("/api/UCSBOrganization").reply(200, "UCSB Organization with orgCode ZPR was deleted");
+        axiosMock.onGet("/api/ucsborganization/all").reply(200, ucsbOrganizationFixtures.threeOrganization);
+        axiosMock.onDelete("/api/ucsborganization").reply(200, "UCSBOrganization with orgCode VSA was deleted");
 
 
         render(
@@ -132,7 +136,7 @@ describe("UCSBOrganizationIndexPage tests", () => {
 
         await waitFor(() => { expect(screen.getByTestId(`${testId}-cell-row-0-col-orgCode`)).toBeInTheDocument(); });
 
-        expect(screen.getByTestId(`${testId}-cell-row-0-col-orgCode`)).toHaveTextContent("SKY");
+        expect(screen.getByTestId(`${testId}-cell-row-0-col-orgCode`)).toHaveTextContent("VSA");
 
 
         const deleteButton = screen.getByTestId(`${testId}-cell-row-0-col-Delete-button`);
@@ -140,12 +144,12 @@ describe("UCSBOrganizationIndexPage tests", () => {
 
         fireEvent.click(deleteButton);
 
-        await waitFor(() => { expect(mockToast).toBeCalledWith("UCSB Organization with orgCode ZPR was deleted") });
+        await waitFor(() => { expect(mockToast).toBeCalledWith("UCSBOrganization with orgCode VSA was deleted") });
 
         await waitFor(() => { expect(axiosMock.history.delete.length).toBe(1); });
-        expect(axiosMock.history.delete[0].url).toBe("/api/UCSBOrganization");
-        expect(axiosMock.history.delete[0].url).toBe("/api/UCSBOrganization");
-        expect(axiosMock.history.delete[0].params).toEqual({ orgCode: "SKY" });
+        expect(axiosMock.history.delete[0].url).toBe("/api/ucsborganization");
+        expect(axiosMock.history.delete[0].url).toBe("/api/ucsborganization");
+        expect(axiosMock.history.delete[0].params).toEqual({ orgCode: "VSA" });
     });
 
 });
