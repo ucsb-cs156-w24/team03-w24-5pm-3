@@ -12,6 +12,7 @@ import AxiosMockAdapter from "axios-mock-adapter";
 import mockConsole from "jest-mock-console";
 
 
+
 const mockToast = jest.fn();
 jest.mock('react-toastify', () => {
     const originalModule = jest.requireActual('react-toastify');
@@ -124,7 +125,7 @@ describe("RecommendationRequestIndexPage tests", () => {
         setupAdminUser();
         const queryClient = new QueryClient();
         axiosMock.onGet("/api/recommendationrequest/all").reply(200, recommendationRequestFixtures.threeRecommendationRequests);
-        axiosMock.onDelete("/api/recommendationrequest").reply(200, "RecommendationRequest with id 2 was deleted");
+        axiosMock.onDelete("/api/recommendationrequest/").reply(200, "RecommendationRequest with id 2 was deleted");
 
         // act
         render(
@@ -138,7 +139,7 @@ describe("RecommendationRequestIndexPage tests", () => {
         // assert
         await waitFor(() => { expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument(); });
 
-        expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
+        expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("2");
 
         const deleteButton = screen.getByTestId(`${testId}-cell-row-0-col-Delete-button`);
         expect(deleteButton).toBeInTheDocument();
