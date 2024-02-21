@@ -1,42 +1,35 @@
-const organizationFixtures = {
-    oneOrganization:
-    [
-      {
-       "id": 1,
-        "orgCode": "EXC",
-        "orgTranslationShort": "Excursion",
-	"orgTranslation": "Excursion ORGANIZATION",
-	"inactive": false
-      }
-    ],
+const ucsbOrganizationFixtures = {
+    oneUCSBOrganization: {
+        "id": 1,
+        "orgCode": "ZPR",
+        "orgTranslationShort": "ZETA PHI RHO",
+        "orgTranslation": "ZETA PHI RHO",
+        "inactive": false
+    },
 
-    threeOrganizations:
-    [
+    threeUCSBOrganizations: [
         {
             "id": 2,
-             "orgCode": "CHE",
-             "orgTranslationShort": "CHESS CLUB",
-             "orgTranslation": "CHESS CLUB AT UCSB",
-             "inactive": false      
+            "orgCode": "CHE",
+            "orgTranslationShort": "CHESS CLUB",
+            "orgTranslation": "CHESS CLUB AT UCSB",
+            "inactive": false      
         },
-
         {
             "id": 3,
-             "orgCode": "LC",
-	     "orgTranslationShort": "LEADERSHIP CLUB",
-             "orgTranslation": "LEADERSHIP CLUB AT UCSB",
-             "inactive": false  
+            "orgCode": "LC",
+            "orgTranslationShort": "LEADERSHIP CLUB",
+            "orgTranslation": "LEADERSHIP CLUB AT UCSB",
+            "inactive": false  
         },
-
         {
             "id": 4,
-             "orgCode": "TASA",
-	     "orgTranslationShort": "Taiwanese CLUB",
-             "orgTranslation": "TAIWANESE CLUB AT UCSB",
-             "inactive": false      
-        },
-
+            "orgCode": "TASA",
+            "orgTranslationShort": "Taiwanese CLUB",
+            "orgTranslation": "TAIWANESE CLUB AT UCSB",
+            "inactive": false      
+        }
     ]
 };
 
-export { organizationFixtures };
+export { ucsbOrganizationFixtures };
