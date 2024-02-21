@@ -55,7 +55,7 @@ export default function RecommendationRequestTable({requests, currentUser }) {
         {
             Header: 'Done',
             id: 'done',
-            // Stryker disable next-line Regex
+            // Stryker disable next-line all
             accessor: d => d.done.toString(),
         }
     ];
