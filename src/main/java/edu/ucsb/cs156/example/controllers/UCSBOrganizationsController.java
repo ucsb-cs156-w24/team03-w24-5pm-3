@@ -1,9 +1,7 @@
 package edu.ucsb.cs156.example.controllers;
-
 import edu.ucsb.cs156.example.entities.UCSBOrganizations;
 import edu.ucsb.cs156.example.errors.EntityNotFoundException;
 import edu.ucsb.cs156.example.repositories.UCSBOrganizationsRepository;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import javax.validation.Valid;
 
 @Tag(name = "UCSBOrganizations")
@@ -43,11 +40,11 @@ public class UCSBOrganizationsController extends ApiController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/post")
     public UCSBOrganizations postCommons(
-        @Parameter(name="orgCode") @RequestParam String orgCode,
-        @Parameter(name="orgTranslationShort") @RequestParam String orgTranslationShort,
-        @Parameter(name="orgTranslation") @RequestParam String orgTranslation,
-        @Parameter(name="inactive") @RequestParam boolean inactive)
-        {
+            @Parameter(name="orgCode") @RequestParam String orgCode,
+            @Parameter(name="orgTranslationShort") @RequestParam String orgTranslationShort,
+            @Parameter(name="orgTranslation") @RequestParam String orgTranslation,
+            @Parameter(name="inactive") @RequestParam boolean inactive)
+    {
         UCSBOrganizations commons = new UCSBOrganizations();
         commons.setOrgCode(orgCode);
         commons.setOrgTranslationShort(orgTranslationShort);
@@ -81,4 +78,26 @@ public class UCSBOrganizationsController extends ApiController {
         ucsbOrganizationsRepository.delete(commons);
         return genericMessage("UCSBOrganizations with id %s deleted".formatted(orgCode));
     }
-}  
+
+    @Operation(summary= "Update a single UCSBOrganization")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("")
+    public UCSBOrganizations updateOrganizations(
+            @Parameter(name="code") @RequestParam String code,
+            @RequestBody @Valid UCSBOrganizations incoming) {
+
+        UCSBOrganizations organization = ucsbOrganizationsRepository.findById(code)
+                .orElseThrow(() -> new EntityNotFoundException(UCSBOrganizations.class, code));
+
+        organization.setOrgCode(incoming.getOrgCode());
+        organization.setOrgTranslationShort(incoming.getOrgTranslationShort());
+        organization.setOrgTranslation(incoming.getOrgTranslation());
+        organization.setInactive(incoming.getInactive());
+
+        ucsbOrganizationsRepository.save(organization);
+
+        return organization;
+    }
+
+}
+//last

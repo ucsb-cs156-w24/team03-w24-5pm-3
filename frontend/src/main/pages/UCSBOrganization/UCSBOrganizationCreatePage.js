@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 export default function UCSBOrganizationCreatePage({storybook=false}) {
 
   const objectToAxiosParams = (ucsbOrganization) => ({
-    url: "/api/ucsborganization/post",
+    url: "/api/ucsborganizations/post",
     method: "POST",
     params: {
      orgCode: ucsbOrganization.orgCode,
@@ -25,7 +25,7 @@ export default function UCSBOrganizationCreatePage({storybook=false}) {
     objectToAxiosParams,
      { onSuccess }, 
      // Stryker disable next-line all : hard to set up test for caching
-     ["/api/ucsborganization/all"] // mutation makes this key stale so that pages relying on it reload
+     ["/api/ucsborganizations/all"] // mutation makes this key stale so that pages relying on it reload
      );
 
   const { isSuccess } = mutation
@@ -35,7 +35,7 @@ export default function UCSBOrganizationCreatePage({storybook=false}) {
   }
 
   if (isSuccess && !storybook) {
-    return <Navigate to="/ucsborganization" />
+    return <Navigate to="/ucsborganizations" />
   }
 
   return (
