@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for components/HelpRequest/HelpRequestTable.js</title>
+    <title>Code coverage report for components/RecommendationRequest/RecommendationRequestTable.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">components/HelpRequest</a> HelpRequestTable.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">components/RecommendationRequest</a> RecommendationRequestTable.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -194,13 +194,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -209,16 +209,16 @@
 import OurTable, { ButtonColumn } from "main/components/OurTable";
 &nbsp;
 import { useBackendMutation } from "main/utils/useBackend";
-import { cellToAxiosParamsDelete, onDeleteSuccess } from "main/utils/HelpRequestUtils"
+import { cellToAxiosParamsDelete, onDeleteSuccess } from "main/utils/recommendationRequestUtils"
 import { useNavigate } from "react-router-dom";
 import { hasRole } from "main/utils/currentUser";
 &nbsp;
-export default function HelpRequestTable({ requests, currentUser }) {
+export default function RecommendationRequestTable({requests, currentUser }) {
 &nbsp;
     const navigate = useNavigate();
 &nbsp;
     const editCallback = (cell) =&gt; {
-        navigate(`/helprequest/edit/${cell.row.values.id}`)
+        navigate(`/recommendationrequest/edit/${cell.row.values.id}`)
     }
 &nbsp;
     // Stryker disable all : hard to test for query caching
@@ -226,11 +226,11 @@ export default function HelpRequestTable({ requests, currentUser }) {
     const deleteMutation = useBackendMutation(
         cellToAxiosParamsDelete,
         { onSuccess: onDeleteSuccess },
-        ["/api/helprequests/all"]
+        ["/api/recommendationrequest/all"]
     );
-    // Stryker restore all 
+    // Stryker restore all
 &nbsp;
-    // Stryker disable next-line all : TODO try to make a good test for this
+    // Stryker disable next-line all
     const deleteCallback = async (cell) =&gt; { deleteMutation.mutate(cell); }
 &nbsp;
 &nbsp;
@@ -244,39 +244,39 @@ export default function HelpRequestTable({ requests, currentUser }) {
             accessor: 'requesterEmail',
         },
         {
-            Header: 'TeamId',
-            accessor: 'teamId',
-        },
-        {
-            Header: 'TableOrBreakoutRoom',
-            accessor: 'tableOrBreakoutRoom',
+            Header: 'ProfessorEmail',
+            accessor: 'professorEmail',
         },
         {
             Header: 'Explanation',
             accessor: 'explanation',
         },
         {
-            Header: 'RequestTime',
-            accessor: 'requestTime',
+            Header: 'DateRequested',
+            accessor: 'dateRequested',
         },
         {
-            Header: 'Solved',
-            accessor: 'solved',
+            Header: 'DateNeeded',
+            accessor: 'dateNeeded',
         },
-        
+        {
+            Header: 'Done',
+            accessor: 'done',
+        }
     ];
 &nbsp;
     if (hasRole(currentUser, "ROLE_ADMIN")) {
-        columns.push(ButtonColumn("Edit", "primary", editCallback, "HelpRequestTable"));
-        columns.push(ButtonColumn("Delete", "danger", deleteCallback, "HelpRequestTable"));
-    } 
+        columns.push(ButtonColumn("Edit", "primary", editCallback, "RecommendationRequestTable"));
+        columns.push(ButtonColumn("Delete", "danger", deleteCallback, "RecommendationRequestTable"));
+    }
 &nbsp;
     return &lt;OurTable
         data={requests}
         columns={columns}
-        testid={"HelpRequestTable"}
+        testid={"RecommendationRequestTable"}
     /&gt;;
-};</pre></td></tr></table></pre>
+};
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
