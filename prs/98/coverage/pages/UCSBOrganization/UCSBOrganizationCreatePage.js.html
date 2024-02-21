@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for pages/MenuItemReviews/MenuItemReviewCreatePage.js</title>
+    <title>Code coverage report for pages/UCSBOrganization/UCSBOrganizationCreatePage.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">pages/MenuItemReviews</a> MenuItemReviewCreatePage.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">pages/UCSBOrganization</a> UCSBOrganizationCreatePage.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -111,11 +111,7 @@
 <a name='L46'></a><a href='#L46'>46</a>
 <a name='L47'></a><a href='#L47'>47</a>
 <a name='L48'></a><a href='#L48'>48</a>
-<a name='L49'></a><a href='#L49'>49</a>
-<a name='L50'></a><a href='#L50'>50</a>
-<a name='L51'></a><a href='#L51'>51</a>
-<a name='L52'></a><a href='#L52'>52</a>
-<a name='L53'></a><a href='#L53'>53</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L49'></a><a href='#L49'>49</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -124,7 +120,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -154,7 +149,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
@@ -165,37 +159,34 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
-import MenuItemReviewForm from "main/components/MenuItemReviews/MenuItemReviewForm";
+import UCSBOrganizationForm from "main/components/UCSBOrganization/UCSBOrganizationForm";
 import { Navigate } from 'react-router-dom'
 import { useBackendMutation } from "main/utils/useBackend";
 import { toast } from "react-toastify";
 &nbsp;
-export default function MenuItemReviewCreatePage({storybook=false}) {
+export default function UCSBOrganizationCreatePage({storybook=false}) {
 &nbsp;
-const objectToAxiosParams = (menuItemReview) =&gt; ({
-    url: "/api/menuitemreviews/post",
+  const objectToAxiosParams = (ucsbOrganization) =&gt; ({
+    url: "/api/ucsborganization/post",
     method: "POST",
     params: {
-        itemId: menuItemReview.itemId,
-        reviewerEmail: menuItemReview.reviewerEmail,
-        stars: menuItemReview.stars,
-        dateReviewed: menuItemReview.dateReviewed,
-        comments: menuItemReview.comments
+     orgCode: ucsbOrganization.orgCode,
+     orgTranslationShort: ucsbOrganization.orgTranslationShort,
+     orgTranslation: ucsbOrganization.orgTranslation,
+     inactive: ucsbOrganization.inactive
     }
-    });
+  });
 &nbsp;
-  const onSuccess = (menuItemReview) =&gt; {
-    toast(`New review Created - id: ${menuItemReview.id} itemId: ${menuItemReview.itemId} stars: ${menuItemReview.stars}`);
+  const onSuccess = (ucsbOrganization) =&gt; {
+    toast(`New ucsbOrganization Created - ordCode: ${ucsbOrganization.orgCode} orgCodeTranslationShort: ${ucsbOrganization.orgTranslationShort} orgTranslation: ${ucsbOrganization.orgTranslation} inactive: ${ucsbOrganization.inactive}`);
   }
 &nbsp;
   const mutation = useBackendMutation(
     objectToAxiosParams,
      { onSuccess }, 
      // Stryker disable next-line all : hard to set up test for caching
-     ["/api/menuitemreviews/all"] // mutation makes this key stale so that pages relying on it reload
+     ["/api/ucsborganization/all"] // mutation makes this key stale so that pages relying on it reload
      );
 &nbsp;
   const { isSuccess } = mutation
@@ -205,21 +196,18 @@ const objectToAxiosParams = (menuItemReview) =&gt; ({
   }
 &nbsp;
   if (isSuccess &amp;&amp; !storybook) {
-    return &lt;Navigate to="/menuitemreviews" /&gt;
+    return &lt;Navigate to="/ucsborganization" /&gt;
   }
 &nbsp;
-    // Stryker disable all : placeholder for future implementation
-    return (
-        &lt;BasicLayout&gt;
-        &lt;div className="pt-2"&gt;
-            &lt;h1&gt;Create New MenuItemReview&lt;/h1&gt;
-            &lt;MenuItemReviewForm submitAction={onSubmit} /&gt;
-        &lt;/div&gt;
-        &lt;/BasicLayout&gt;
-    )
-    }
-&nbsp;
-    </pre></td></tr></table></pre>
+  return (
+    &lt;BasicLayout&gt;
+      &lt;div className="pt-2"&gt;
+        &lt;h1&gt;Create New UCSBOrganization&lt;/h1&gt;
+        &lt;UCSBOrganizationForm submitAction={onSubmit} /&gt;
+      &lt;/div&gt;
+    &lt;/BasicLayout&gt;
+  )
+}</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
