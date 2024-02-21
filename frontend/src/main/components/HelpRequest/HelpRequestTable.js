@@ -53,7 +53,7 @@ export default function HelpRequestTable({ requests, currentUser }) {
             accessor: 'requestTime',
         },
         {
-            Header: 'Solved',
+            Header: 'solved',
             accessor: d=>d.solved.toString(),
         },
         
