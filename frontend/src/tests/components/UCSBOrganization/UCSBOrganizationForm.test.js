@@ -2,7 +2,7 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 
 import UCSBOrganizationForm from "main/components/UCSBOrganization/UCSBOrganizationForm";
-import { ucsbOrganizationFixtures } from "fixtures/ucsbOrganizationFixtures"; 
+import { ucsbOrganizationFixtures } from "fixtures/UCSBOrganizationFixtures"; 
 
 import { QueryClient, QueryClientProvider } from "react-query";
 
