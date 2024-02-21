@@ -54,7 +54,7 @@ export default function HelpRequestTable({ requests, currentUser }) {
         },
         {
             Header: 'Solved',
-            accessor: 'solved',
+            accessor: d=>d.solved.toString(),
         },
         
     ];

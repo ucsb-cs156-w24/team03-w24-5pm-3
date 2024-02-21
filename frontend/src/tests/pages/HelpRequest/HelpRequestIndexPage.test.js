@@ -45,7 +45,7 @@ describe("HelpRequestIndexPage tests", () => {
 
     test("Renders with Create Button for admin user", async () => {
         setupAdminUser();
-        axiosMock.onGet("/api/HelpRequest/all").reply(200, []);
+        axiosMock.onGet("/api/helprequests/all").reply(200, []);
 
         render(
             <QueryClientProvider client={queryClient}>
@@ -65,7 +65,7 @@ describe("HelpRequestIndexPage tests", () => {
 
     test("renders three help requests correctly for regular user", async () => {
         setupUserOnly();
-        axiosMock.onGet("/api/HelpRequest/all").reply(200, helpRequestFixtures.threeHelpRequests);
+        axiosMock.onGet("/api/HelpRequests/all").reply(200, helpRequestFixtures.threeRequests);
 
         render(
             <QueryClientProvider client={queryClient}>
@@ -82,19 +82,19 @@ describe("HelpRequestIndexPage tests", () => {
         const createHelpRequestButton = screen.queryByText("Create Help Request");
         expect(createHelpRequestButton).not.toBeInTheDocument();
 
-        const requesterEmail = screen.getByText("cgaucho@ucsb.edu");
+        const requesterEmail = screen.getByText("bendover1@ucsb.edu");
         expect(requesterEmail).toBeInTheDocument();
 
-        const teamId = screen.getByText("w24-7pm-3");
+        const teamId = screen.getByText("s22-6pm-3");
         expect(teamId).toBeInTheDocument();
 
         const tableOrBreakoutRoom = screen.getByText("6");
         expect(tableOrBreakoutRoom).toBeInTheDocument();
 
-        const requestTime = screen.getByText("2024-02-05T00:00:00");
+        const requestTime = screen.getByText("2022-01-02T12:00:00");
         expect(requestTime).toBeInTheDocument();
 
-        const explanation = screen.getByText("dokku help");
+        const explanation = screen.getByText("Need help w Swagger-ui");
         expect(explanation).toBeInTheDocument();
 
         // for non-admin users, details button is visible, but the edit and delete buttons should not be visible
@@ -105,7 +105,7 @@ describe("HelpRequestIndexPage tests", () => {
     test("renders empty table when backend unavailable, user only", async () => {
         setupUserOnly();
 
-        axiosMock.onGet("/api/HelpRequest/all").timeout();
+        axiosMock.onGet("/api/helprequests/all").timeout();
 
         const restoreConsole = mockConsole();
 
@@ -120,7 +120,7 @@ describe("HelpRequestIndexPage tests", () => {
         await waitFor(() => { expect(axiosMock.history.get.length).toBeGreaterThanOrEqual(1); });
         
         const errorMessage = console.error.mock.calls[0][0];
-        expect(errorMessage).toMatch("Error communicating with backend via GET on /api/HelpRequest/all");
+        expect(errorMessage).toMatch("Error communicating with backend via GET on /api/HelpRequests/all");
         restoreConsole();
 
     });
@@ -128,8 +128,8 @@ describe("HelpRequestIndexPage tests", () => {
     test("what happens when you click delete, admin", async () => {
         setupAdminUser();
 
-        axiosMock.onGet("/api/HelpRequest/all").reply(200, helpRequestFixtures.threeHelpRequests);
-        axiosMock.onDelete("/api/HelpRequest").reply(200, "HelpRequest with id 2 was deleted");
+        axiosMock.onGet("/api/helprequests/all").reply(200, helpRequestFixtures.threeRequests);
+        axiosMock.onDelete("/api/helprequests").reply(200, "HelpRequest with id 2 was deleted");
 
 
         render(
@@ -153,8 +153,8 @@ describe("HelpRequestIndexPage tests", () => {
         await waitFor(() => { expect(mockToast).toBeCalledWith("HelpRequest with id 2 was deleted") });
 
         await waitFor(() => { expect(axiosMock.history.delete.length).toBe(1); });
-        expect(axiosMock.history.delete[0].url).toBe("/api/HelpRequest");
-        expect(axiosMock.history.delete[0].url).toBe("/api/HelpRequest");
+        expect(axiosMock.history.delete[0].url).toBe("/api/helprequests");
+        expect(axiosMock.history.delete[0].url).toBe("/api/helprequests");
         expect(axiosMock.history.delete[0].params).toEqual({ id: 2 });
     });
 

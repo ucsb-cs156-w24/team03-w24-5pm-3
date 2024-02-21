@@ -7,8 +7,8 @@ import { rest } from "msw";
 import HelpRequestIndexPage from "main/pages/HelpRequest/HelpRequestIndexPage";
 
 export default {
-    title: 'pages/HelpRequest/HelpRequestIndexPagee',
-    component: RestaurantIndexPage
+    title: 'pages/HelpRequest/HelpRequestIndexPage',
+    component: HelpRequestIndexPage
 };
 
 const Template = () => <HelpRequestIndexPage storybook={true}/>;
@@ -22,7 +22,7 @@ Empty.parameters = {
         rest.get('/api/systemInfo', (_req, res, ctx) => {
             return res(ctx.json(systemInfoFixtures.showingNeither));
         }),
-        rest.get('/api/helprequest/all', (_req, res, ctx) => {
+        rest.get('/api/helprequests/all', (_req, res, ctx) => {
             return res(ctx.json([]));
         }),
     ]
@@ -38,7 +38,7 @@ ThreeItemsOrdinaryUser.parameters = {
         rest.get('/api/systemInfo', (_req, res, ctx) => {
             return res(ctx.json(systemInfoFixtures.showingNeither));
         }),
-        rest.get('/api/restaurants/all', (_req, res, ctx) => {
+        rest.get('/api/helprequests/all', (_req, res, ctx) => {
             return res(ctx.json(helpRequestFixtures.threeRequests));
         }),
     ],
@@ -54,10 +54,10 @@ ThreeItemsAdminUser.parameters = {
         rest.get('/api/systemInfo', (_req, res, ctx) => {
             return res(ctx.json(systemInfoFixtures.showingNeither));
         }),
-        rest.get('/api/helprequest/all', (_req, res, ctx) => {
+        rest.get('/api/helprequests/all', (_req, res, ctx) => {
             return res(ctx.json(helpRequestFixtures.threeRequests));
         }),
-        rest.delete('/api/helprequest', (req, res, ctx) => {
+        rest.delete('/api/helprequests', (req, res, ctx) => {
             window.alert("DELETE: " + JSON.stringify(req.url));
             return res(ctx.status(200),ctx.json({}));
         }),
