@@ -17,7 +17,7 @@ function RestaurantForm({ initialContents, submitAction, buttonLabel = "Create" 
    
     const navigate = useNavigate();
 
-    const testIdPrefix = "UCSBDiningCommonMenuItemForm";
+    const testIdPrefix = "UCSBDiningCommonsMenuItemForm";
 
     return (
         <Form onSubmit={handleSubmit(submitAction)}>
@@ -42,17 +42,13 @@ function RestaurantForm({ initialContents, submitAction, buttonLabel = "Create" 
                     data-testid={testIdPrefix + "-diningCommonsCode"}
                     id="diningCommonsCode"
                     type="text"
-                    isInvalid={Boolean(errors.name)}
+                    isInvalid={Boolean(errors.diningCommonsCode)}
                     {...register("diningCommonsCode", {
-                        required: "DiningCommonsCode is required.",
-                        maxLength : {
-                            value: 30,
-                            message: "Max length 30 characters"
-                        }
+                        required: "Dining Commons Code is required",
                     })}
                 />
                 <Form.Control.Feedback type="invalid">
-                    {errors.name?.message}
+                    {errors.diningCommonsCode?.message}
                 </Form.Control.Feedback>
             </Form.Group>
 
@@ -62,13 +58,13 @@ function RestaurantForm({ initialContents, submitAction, buttonLabel = "Create" 
                     data-testid={testIdPrefix + "-name"}
                     id="name"
                     type="text"
-                    isInvalid={Boolean(errors.description)}
+                    isInvalid={Boolean(errors.name)}
                     {...register("name", {
-                        required: "Name is required."
+                        required: "Name is required"
                     })}
                 />
                 <Form.Control.Feedback type="invalid">
-                    {errors.description?.message}
+                    {errors.name?.message}
                 </Form.Control.Feedback>
             </Form.Group>
 
@@ -78,13 +74,13 @@ function RestaurantForm({ initialContents, submitAction, buttonLabel = "Create" 
                     data-testid={testIdPrefix + "-station"}
                     id="station"
                     type="text"
-                    isInvalid={Boolean(errors.description)}
+                    isInvalid={Boolean(errors.station)}
                     {...register("station", {
-                        required: "Station is required."
+                        required: "Station is required"
                     })}
                 />
                 <Form.Control.Feedback type="invalid">
-                    {errors.description?.message}
+                    {errors.station?.message}
                 </Form.Control.Feedback>
             </Form.Group>
 

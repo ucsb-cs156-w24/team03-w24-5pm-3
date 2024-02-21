@@ -1,11 +1,11 @@
 const ucsbDiningCommonsMenuItemFixtures = {
-    oneRequest: {
+    oneMenuItem: {
         "id": 1,
         "diningCommonsCode": "portola",
         "name": "chicken",
         "station": "Main dish"
     },
-    threeRequests: [
+    threeMenuItems: [
         {
             "id": 2,
             "diningCommonsCode": "DLG",

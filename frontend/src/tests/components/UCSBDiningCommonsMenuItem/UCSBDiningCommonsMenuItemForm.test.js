@@ -1,8 +1,8 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 
-import UCSBDiningCommonMenuItemForm from "main/components/UCSBDiningCommonMenuItem/UCSBDiningCommonMenuItemForm";
-import { ucsbDiningCommoneMenuItemFixtures } from "fixtures/ucsbDiningCommoneMenuItemFixtures";
+import UCSBDiningCommonsMenuItemForm from "main/components/UCSBDiningCommonsMenuItem/UCSBDiningCommonsMenuItemForm";
+import { ucsbDiningCommonsMenuItemFixtures } from "fixtures/ucsbDiningCommonsMenuItemFixtures";
 
 import { QueryClient, QueryClientProvider } from "react-query";
 
@@ -13,17 +13,21 @@ jest.mock('react-router-dom', () => ({
     useNavigate: () => mockedNavigate
 }));
 
-describe("UCSBDiningCommonMenuItemForm tests", () => {
+describe("UCSBDiningCommonsMenuItemForm tests", () => {
     const queryClient = new QueryClient();
 
     const expectedHeaders = ["Dining Commons Code", "Name", "Station"];
-    const testId = "UCSBDiningCommonMenuItemForm";
+    const testId = "UCSBDiningCommonsMenuItemForm";
+    const sub_name = "name";
+    const sub_diningCommonsCode = "diningCommonsCode";
+    const sub_station = "station";
+    const sub_submit = "submit";
 
     test("renders correctly with no initialContents", async () => {
         render(
             <QueryClientProvider client={queryClient}>
                 <Router>
-                    <UCSBDiningCommonMenuItemForm />
+                    <UCSBDiningCommonsMenuItemForm />
                 </Router>
             </QueryClientProvider>
         );
@@ -41,7 +45,7 @@ describe("UCSBDiningCommonMenuItemForm tests", () => {
         render(
             <QueryClientProvider client={queryClient}>
                 <Router>
-                    <UCSBDiningCommonMenuItemForm initialContents={restaurantFixtures.oneRestaurant} />
+                    <UCSBDiningCommonsMenuItemForm initialContents={ucsbDiningCommonsMenuItemFixtures.oneMenuItem} />
                 </Router>
             </QueryClientProvider>
         );
@@ -62,7 +66,7 @@ describe("UCSBDiningCommonMenuItemForm tests", () => {
         render(
             <QueryClientProvider client={queryClient}>
                 <Router>
-                    <UCSBDiningCommonMenuItemForm />
+                    <UCSBDiningCommonsMenuItemForm />
                 </Router>
             </QueryClientProvider>
         );
@@ -78,7 +82,7 @@ describe("UCSBDiningCommonMenuItemForm tests", () => {
         render(
             <QueryClientProvider client={queryClient}>
                 <Router>
-                    <UCSBDiningCommonMenuItemForm />
+                    <UCSBDiningCommonsMenuItemForm />
                 </Router>
             </QueryClientProvider>
         );
@@ -87,16 +91,31 @@ describe("UCSBDiningCommonMenuItemForm tests", () => {
         const submitButton = screen.getByText(/Create/);
         fireEvent.click(submitButton);
 
-        await screen.findByText(/Name is required/);
-        expect(screen.getByText(/Description is required/)).toBeInTheDocument();
+        await screen.findByText(/Dining Commons Code is required/);
+        expect(screen.getByText(/Dining Commons Code is required/)).toBeInTheDocument();
 
-        const nameInput = screen.getByTestId(`${testId}-name`);
-        fireEvent.change(nameInput, { target: { value: "a".repeat(31) } });
+        await screen.findByText(/Name is required/);
+        expect(screen.getByText(/Name is required/)).toBeInTheDocument();
+
+        await screen.findByText(/Station is required/);
+        expect(screen.getByText(/Station is required/)).toBeInTheDocument();
+
+        const nameInput = screen.getByTestId(`${testId}-${sub_name}`);
+        fireEvent.change(nameInput, { sub_name: { value: "a".repeat(31) } });
+        fireEvent.click(submitButton);
+        
+        const diningCommonsCodeInput = screen.getByTestId(`${testId}-${sub_diningCommonsCode}`);
+        fireEvent.change(diningCommonsCodeInput, { sub_diningCommonsCode: {} });
         fireEvent.click(submitButton);
 
-        await waitFor(() => {
-            expect(screen.getByText(/Max length 30 characters/)).toBeInTheDocument();
-        });
+        const stationInput = screen.getByTestId(`${testId}-${sub_station}`);
+        fireEvent.change(stationInput, { sub_station: {} });
+        fireEvent.click(submitButton);
+
+        const submitInput = screen.getByTestId(`${testId}-${sub_submit}`);
+        fireEvent.change(submitInput, { sub_submit: {} });
+        fireEvent.click(submitButton);
+
     });
 
 });
