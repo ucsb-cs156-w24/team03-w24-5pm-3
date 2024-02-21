@@ -12,6 +12,8 @@ export default function UCSBOrganizationIndexPage() {
 
     const { data: organizations, error: _error, status: _status } =
         useBackend(
+                // Stryker disable next-line all : don't test internal caching of React Query
+
             ["/api/UCSBOrganization/all"],
             { method: "GET", url: "/api/UCSBOrganization/all" },
             []
