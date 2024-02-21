@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for components/Restaurants/RestaurantForm.js</title>
+    <title>Code coverage report for components/UCSBOrganization/UCSBOrganizationEditForm.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">components/Restaurants</a> RestaurantForm.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">components/UCSBOrganization</a> UCSBOrganizationEditForm.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -157,9 +157,13 @@
 <a name='L92'></a><a href='#L92'>92</a>
 <a name='L93'></a><a href='#L93'>93</a>
 <a name='L94'></a><a href='#L94'>94</a>
-<a name='L95'></a><a href='#L95'>95</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -172,8 +176,6 @@
 <span class="cline-any cline-yes">22x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">22x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">22x</span>
@@ -240,7 +242,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -255,10 +267,8 @@
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom';
 &nbsp;
-function RestaurantForm({ initialContents, submitAction, buttonLabel = "Create" }) {
+function UCSBOrganizationForm({ initialContents, submitAction, buttonLabel = "Create" }) {
 &nbsp;
-&nbsp;
-    // Stryker disable all
     const {
         register,
         formState: { errors },
@@ -266,23 +276,21 @@ function RestaurantForm({ initialContents, submitAction, buttonLabel = "Create" 
     } = useForm(
         { defaultValues: initialContents || {}, }
     );
-    // Stryker restore all
-&nbsp;
     const navigate = useNavigate();
 &nbsp;
-    const testIdPrefix = "RestaurantForm";
+    const testIdPrefix = "UCSBOrganizationForm";
 &nbsp;
     return (
         &lt;Form onSubmit={handleSubmit(submitAction)}&gt;
 &nbsp;
             {initialContents &amp;&amp; (
                 &lt;Form.Group className="mb-3" &gt;
-                    &lt;Form.Label htmlFor="id"&gt;Id&lt;/Form.Label&gt;
+                    &lt;Form.Label htmlFor="orgCode"&gt;Organization Code&lt;/Form.Label&gt;
                     &lt;Form.Control
-                        data-testid={testIdPrefix + "-id"}
-                        id="id"
+                        data-testid={testIdPrefix + "-orgCode"}
+                        id="orgCode"
                         type="text"
-                        {...register("id")}
+                        {...register("orgCode")}
                         value={initialContents.id}
                         disabled
                     /&gt;
@@ -290,39 +298,49 @@ function RestaurantForm({ initialContents, submitAction, buttonLabel = "Create" 
             )}
 &nbsp;
             &lt;Form.Group className="mb-3" &gt;
-                &lt;Form.Label htmlFor="name"&gt;Name&lt;/Form.Label&gt;
+                &lt;Form.Label htmlFor="orgTranslationShort"&gt;Organization Translation (short)&lt;/Form.Label&gt;
                 &lt;Form.Control
-                    data-testid={testIdPrefix + "-name"}
-                    id="name"
+                    data-testid={testIdPrefix + "-orgTranslationShort"}
+                    id="orgTranslationShort"
                     type="text"
-                    isInvalid={Boolean(errors.name)}
-                    {...register("name", {
-                        required: "Name is required.",
+                    isInvalid={Boolean(errors.orgTranslationShort)}
+                    {...register("orgTranslationShort", {
+                        required: "Shortened organization translation is required.",
                         maxLength : {
-                            value: 30,
-                            message: "Max length 30 characters"
+                            value: 50,
+                            message: "Max length 50 characters"
                         }
                     })}
                 /&gt;
                 &lt;Form.Control.Feedback type="invalid"&gt;
-                    {errors.name?.message}
+                    {errors.orgTranslationShort?.message}
                 &lt;/Form.Control.Feedback&gt;
             &lt;/Form.Group&gt;
 &nbsp;
             &lt;Form.Group className="mb-3" &gt;
-                &lt;Form.Label htmlFor="description"&gt;Description&lt;/Form.Label&gt;
+                &lt;Form.Label htmlFor="orgTranslation"&gt;Organization Translation&lt;/Form.Label&gt;
                 &lt;Form.Control
-                    data-testid={testIdPrefix + "-description"}
-                    id="description"
+                    data-testid={testIdPrefix + "-orgTranslation"}
+                    id="orgTranslation"
                     type="text"
                     isInvalid={Boolean(errors.description)}
-                    {...register("description", {
-                        required: "Description is required."
+                    {...register("orgTranslation", {
+                        required: "Organization translation is required."
                     })}
                 /&gt;
                 &lt;Form.Control.Feedback type="invalid"&gt;
-                    {errors.description?.message}
+                    {errors.orgTranslation?.message}
                 &lt;/Form.Control.Feedback&gt;
+            &lt;/Form.Group&gt;
+&nbsp;
+            &lt;Form.Group className="mb-3" &gt;
+                &lt;Form.Label htmlFor="inactive"&gt;Inactive&lt;/Form.Label&gt;
+                &lt;Form.Check
+                    data-testid={testIdPrefix + "-inactive"}
+                    id="inactive"
+                    type="checkbox"
+                    {...register("inactive")}
+                /&gt;
             &lt;/Form.Group&gt;
 &nbsp;
 &nbsp;
@@ -345,7 +363,7 @@ function RestaurantForm({ initialContents, submitAction, buttonLabel = "Create" 
     )
 }
 &nbsp;
-export default RestaurantForm;</pre></td></tr></table></pre>
+export default UCSBOrganizationForm;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
