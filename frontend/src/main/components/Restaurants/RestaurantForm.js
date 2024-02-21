@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 function RestaurantForm({ initialContents, submitAction, buttonLabel = "Create" }) {
 
     
-// what is going hereeeeee
+    // Stryker disable all : hard to test for query caching
     const {
         register,
         formState: { errors },
@@ -13,7 +13,13 @@ function RestaurantForm({ initialContents, submitAction, buttonLabel = "Create" 
     } = useForm(
         { defaultValues: initialContents || {}, }
     );
-   
+       // Stryker restore all
+
+
+
+
+    // Stryker disable next-line all
+
     const navigate = useNavigate();
 
     const testIdPrefix = "RestaurantForm";

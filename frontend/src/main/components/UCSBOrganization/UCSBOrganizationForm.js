@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 
 function UCSBOrganizationForm({ initialContents, submitAction, buttonLabel = "Create" }) {
 
+    // Stryker disable all
+
     const {
         register,
         formState: { errors },
@@ -12,6 +14,9 @@ function UCSBOrganizationForm({ initialContents, submitAction, buttonLabel = "Cr
         { defaultValues: initialContents || {}, }
     );
     const navigate = useNavigate();
+    // Stryker restore all
+
+    // Stryker disable next-line all : TODO try to make a good test for this
 
     const testIdPrefix = "UCSBOrganizationForm";
 

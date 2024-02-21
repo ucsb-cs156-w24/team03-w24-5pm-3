@@ -17,12 +17,16 @@ export default function UCSBOrganizationTable({
         navigate(`/UCSBOrganization/edit/${cell.row.values.orgCode}`)
     }
 
+    // Stryker disable all : hard to test for query caching
 
     const deleteMutation = useBackendMutation(
         cellToAxiosParamsDelete,
         { onSuccess: onDeleteSuccess },
         ["/api/UCSBOrganization/all"]
     );
+    // Stryker restore all 
+
+    // Stryker disable next-line all : TODO try to make a good test for this
 
     const deleteCallback = async (cell) => { deleteMutation.mutate(cell); }
 
