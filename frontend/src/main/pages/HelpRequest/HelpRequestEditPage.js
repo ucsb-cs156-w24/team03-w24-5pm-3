@@ -39,7 +39,7 @@ export default function HelpRequestEditPage({storybook=false}) {
   });
 
   const onSuccess = (helpRequest) => {
-    toast(`Help Request Updated - id: ${helpRequest.id} requesterEmail: ${helpRequest.requesterEmail} teamId: ${helpRequest.teamId} tableOrBreakoutRoom: ${helpRequest.tableOrBreakoutRoom} requestTime: ${helpRequest.requestTime} explanation: ${helpRequest.explanation} solved: ${helpRequest.solved}`);
+    toast(`Help Request Updated - id: ${helpRequest.id} requesterEmail: ${helpRequest.requesterEmail}`);
   }
 
   const mutation = useBackendMutation(
@@ -56,7 +56,7 @@ export default function HelpRequestEditPage({storybook=false}) {
   }
 
   if (isSuccess && !storybook) {
-    return <Navigate to="/helprequests" />
+    return <Navigate to="/helprequest" />
   }
 
   return (

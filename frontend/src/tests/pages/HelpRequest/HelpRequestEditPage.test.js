@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, waitFor, screen } from "@testing-library/react";
 import HelpRequestEditPage from "main/pages/HelpRequest/HelpRequestEditPage";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
@@ -80,16 +80,16 @@ describe("HelpRequestEditPage tests", () => {
                 tableOrBreakoutRoom: "7",
                 explanation: "Need help with Swagger-ui",
                 requestTime: "2022-01-02T12:00:00",
-                solved: false
+                solved: "false"
             });
-            axiosMock.onPut('/api/restaurants').reply(200, {
+            axiosMock.onPut('/api/helprequests').reply(200, {
                 id: "17",
                 requesterEmail: "bendover1@ucsb.edu",
                 teamId: "s22-6pm-3",
                 tableOrBreakoutRoom: "6",
                 explanation: "Need help w Swagger-ui",
                 requestTime: "2022-01-02T12:00:00",
-                solved: false
+                solved: "true"
             });
         });
 
@@ -136,28 +136,32 @@ describe("HelpRequestEditPage tests", () => {
             expect(explanationField).toHaveValue("Need help with Swagger-ui");
 
             expect(solvedField).toBeInTheDocument();
-            expect(solvedField).not.toBeChecked();
+            // expect(solvedField).not.toBeChecked();
 
             expect(submitButton).toHaveTextContent("Update");
 
-            fireEvent.change(requesterEmailField, { target: { value: 'bendover1@ucsb.edu"' } });
+            fireEvent.change(requesterEmailField, { target: { value: 'bendover1@ucsb.edu' } });
             fireEvent.change(teamIdField, { target: { value: 's22-6pm-3' } });
             fireEvent.change(tableOrBreakoutRoomField, { target: { value: '6' } });
             fireEvent.change(requestTimeField, { target: { value: '2022-01-02T12:00:00' } });
             fireEvent.change(explanationField, { target: { value: 'Need help w Swagger-ui' } });
-            fireEvent.click(solvedField);
+            fireEvent.change(solved, { target: { value: 'true' } });
             fireEvent.click(submitButton);
 
             await waitFor(() => expect(mockToast).toBeCalled());
-            expect(mockToast).toBeCalledWith("Restaurant Updated - id: 17 name: Freebirds World Burrito");
+            expect(mockToast).toBeCalledWith("Help Request Updated - id: 17 requesterEmail: bendover1@ucsb.edu");
             
-            expect(mockNavigate).toBeCalledWith({ "to": "/restaurants" });
+            expect(mockNavigate).toBeCalledWith({ "to": "/helprequest" });
 
             expect(axiosMock.history.put.length).toBe(1); // times called
             expect(axiosMock.history.put[0].params).toEqual({ id: 17 });
             expect(axiosMock.history.put[0].data).toBe(JSON.stringify({
-                name: 'Freebirds World Burrito',
-                description: 'Totally Giant Burritos'
+                requesterEmail: "bendover1@ucsb.edu",
+                teamId : "s22-6pm-3",
+                tableOrBreakoutRoom : "6",
+                requestTime: "2022-01-02T12:00",
+                explanation : "Need help w Swagger-ui",
+                solved: "false",
             })); // posted object
 
 
@@ -168,31 +172,58 @@ describe("HelpRequestEditPage tests", () => {
             render(
                 <QueryClientProvider client={queryClient}>
                     <MemoryRouter>
-                        <RestaurantEditPage />
+                        <HelpRequestEditPage />
                     </MemoryRouter>
                 </QueryClientProvider>
             );
 
-            await screen.findByTestId("RestaurantForm-id");
+            await screen.findByTestId("HelpRequestForm-id");
 
-            const idField = screen.getByTestId("RestaurantForm-id");
-            const nameField = screen.getByTestId("RestaurantForm-name");
-            const descriptionField = screen.getByTestId("RestaurantForm-description");
-            const submitButton = screen.getByTestId("RestaurantForm-submit");
+            const idField = screen.getByTestId("HelpRequestForm-id");
+            const requesterEmailField = screen.getByTestId("HelpRequestForm-requesterEmail");
+            const teamIdField = screen.getByTestId("HelpRequestForm-teamId");
+            const tableOrBreakoutRoomField = screen.getByTestId("HelpRequestForm-tableOrBreakoutRoom");
+            const requestTimeField = screen.getByTestId("HelpRequestForm-requestTime");
+            const explanationField = screen.getByTestId("HelpRequestForm-explanation");
+            const solvedField = screen.getByTestId("HelpRequestForm-solved");
+            
+            const submitButton = screen.getByTestId("HelpRequestForm-submit");
 
+            expect(idField).toBeInTheDocument();
             expect(idField).toHaveValue("17");
-            expect(nameField).toHaveValue("Freebirds");
-            expect(descriptionField).toHaveValue("Burritos");
-            expect(submitButton).toBeInTheDocument();
 
-            fireEvent.change(nameField, { target: { value: 'Freebirds World Burrito' } })
-            fireEvent.change(descriptionField, { target: { value: 'Big Burritos' } })
+            expect(requesterEmailField).toBeInTheDocument();
+            expect(requesterEmailField).toHaveValue("bendover@ucsb.edu");
+            
+            expect(teamIdField).toBeInTheDocument();
+            expect(teamIdField).toHaveValue("s22-5pm-3");
 
+            expect(tableOrBreakoutRoomField).toBeInTheDocument();
+            expect(tableOrBreakoutRoomField).toHaveValue("7");
+
+            expect(requestTimeField).toBeInTheDocument();
+            expect(requestTimeField).toHaveValue("2022-01-02T12:00");
+            
+            expect(explanationField).toBeInTheDocument();
+            expect(explanationField).toHaveValue("Need help with Swagger-ui");
+
+            expect(solvedField).toBeInTheDocument();
+            // expect(solvedField).not.toBeChecked();
+
+            expect(submitButton).toHaveTextContent("Update");
+
+            fireEvent.change(requesterEmailField, { target: { value: 'bendover1@ucsb.edu' } });
+            fireEvent.change(teamIdField, { target: { value: 's22-6pm-3' } });
+            fireEvent.change(tableOrBreakoutRoomField, { target: { value: '6' } });
+            fireEvent.change(requestTimeField, { target: { value: '2022-01-02T12:00:00' } });
+            fireEvent.change(explanationField, { target: { value: 'Need help w Swagger-ui' } });
+            fireEvent.click(solvedField);
             fireEvent.click(submitButton);
 
             await waitFor(() => expect(mockToast).toBeCalled());
-            expect(mockToast).toBeCalledWith("Restaurant Updated - id: 17 name: Freebirds World Burrito");
-            expect(mockNavigate).toBeCalledWith({ "to": "/restaurants" });
+            expect(mockToast).toBeCalledWith("Help Request Updated - id: 17 requesterEmail: bendover1@ucsb.edu");
+            
+            expect(mockNavigate).toBeCalledWith({ "to": "/helprequest" });
         });
 
        
