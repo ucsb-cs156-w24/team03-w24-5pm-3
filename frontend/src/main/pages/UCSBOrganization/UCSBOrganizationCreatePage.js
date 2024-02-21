@@ -5,28 +5,27 @@ import { useBackendMutation } from "main/utils/useBackend";
 import { toast } from "react-toastify";
 
 export default function UCSBOrganizationCreatePage({storybook=false}) {
-  const objectToAxiosParams = (organization) => ({
-    url: "/api/ucsborganizations/post",
+
+  const objectToAxiosParams = (ucsbOrganization) => ({
+    url: "/api/ucsborganization/post",
     method: "POST",
     params: {
-     orgCode: organization.orgCode,
-     orgTranslationShort: organization.orgTranslationShort,
-     orgTranslation: organization.orgTranslation,
-     inactive: organization.inactive
+     orgCode: ucsbOrganization.orgCode,
+     orgTranslationShort: ucsbOrganization.orgTranslationShort,
+     orgTranslation: ucsbOrganization.orgTranslation,
+     inactive: ucsbOrganization.inactive
     }
   });
 
-  const onSuccess = (organization) => {
-    toast(`New organization Created - orgCode: ${organization.orgCode} orgTranslationShort: ${organization.orgTranslationShort}
-    orgTranslation: ${organization.orgTranslation} inactive: ${organization.inactive}
-    `);
+  const onSuccess = (ucsbOrganization) => {
+    toast(`New ucsbOrganization Created - ordCode: ${ucsbOrganization.orgCode} orgCodeTranslationShort: ${ucsbOrganization.orgTranslationShort} orgTranslation: ${ucsbOrganization.orgTranslation} inactive: ${ucsbOrganization.inactive}`);
   }
 
   const mutation = useBackendMutation(
     objectToAxiosParams,
      { onSuccess }, 
      // Stryker disable next-line all : hard to set up test for caching
-     ["/api/ucsborganizations/all"] // mutation makes this key stale so that pages relying on it reload
+     ["/api/ucsborganization/all"] // mutation makes this key stale so that pages relying on it reload
      );
 
   const { isSuccess } = mutation
@@ -38,14 +37,12 @@ export default function UCSBOrganizationCreatePage({storybook=false}) {
   if (isSuccess && !storybook) {
     return <Navigate to="/ucsborganization" />
   }
-  // Stryker disable all : placeholder for future implementation
+
   return (
     <BasicLayout>
       <div className="pt-2">
         <h1>Create New UCSBOrganization</h1>
-
         <UCSBOrganizationForm submitAction={onSubmit} />
-
       </div>
     </BasicLayout>
   )

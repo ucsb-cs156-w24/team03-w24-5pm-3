@@ -6,7 +6,10 @@ import { cellToAxiosParamsDelete, onDeleteSuccess } from "main/utils/UCSBOrganiz
 import { useNavigate } from "react-router-dom";
 import { hasRole } from "main/utils/currentUser";
 
-export default function UCSBOrganizationTable({ organizations, currentUser }) {
+export default function UCSBOrganizationTable({
+    ucsbOrganization,
+    currentUser,
+    testIdPrefix = "UCSBOrganizationTable" }) {
 
     const navigate = useNavigate();
 
@@ -19,7 +22,7 @@ export default function UCSBOrganizationTable({ organizations, currentUser }) {
     const deleteMutation = useBackendMutation(
         cellToAxiosParamsDelete,
         { onSuccess: onDeleteSuccess },
-        ["/api/ucsborganizations/all"]
+        ["/api/ucsborganization/all"]
     );
     // Stryker restore all 
 
@@ -28,9 +31,10 @@ export default function UCSBOrganizationTable({ organizations, currentUser }) {
 
     const columns = [
         {
-            Header: 'orgCode',
+            Header: 'OrgCode',
             accessor: 'orgCode', // accessor is the "key" in the data
         },
+
         {
             Header: 'OrgTranslationShort',
             accessor: 'orgTranslationShort',
@@ -41,19 +45,18 @@ export default function UCSBOrganizationTable({ organizations, currentUser }) {
         },
         {
             Header: 'Inactive',
-            id: 'inactive',
-            accessor: row => String(row.inactive)
+            accessor: 'inactive',
         }
     ];
 
     if (hasRole(currentUser, "ROLE_ADMIN")) {
-        columns.push(ButtonColumn("Edit", "primary", editCallback, "UCSBOrganizationTable"));
-        columns.push(ButtonColumn("Delete", "danger", deleteCallback, "UCSBOrganizationTable"));
-    } 
+        columns.push(ButtonColumn("Edit", "primary", editCallback, testIdPrefix));
+        columns.push(ButtonColumn("Delete", "danger", deleteCallback, testIdPrefix));
+    }
 
     return <OurTable
-        data={organizations}
+        data={ucsbOrganization}
         columns={columns}
-        testid={"UCSBOrganizationTable"}
+        testid={testIdPrefix}
     />;
 };
