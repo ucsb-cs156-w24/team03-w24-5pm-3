@@ -17,9 +17,6 @@ function RestaurantForm({ initialContents, submitAction, buttonLabel = "Create" 
 
 
 
-
-    // Stryker disable next-line all
-
     const navigate = useNavigate();
 
     const testIdPrefix = "RestaurantForm";
