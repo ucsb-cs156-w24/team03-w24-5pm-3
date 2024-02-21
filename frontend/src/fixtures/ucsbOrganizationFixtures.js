@@ -32,7 +32,7 @@ const UCSBOrganizationFixtures = {
             "inactive": false
         },
 
-    ]
+    ] 
 };
 
 export { UCSBOrganizationFixtures };

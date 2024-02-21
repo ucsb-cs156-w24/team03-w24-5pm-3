@@ -12,7 +12,7 @@ jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
     useNavigate: () => mockedNavigate
 }));
-
+ 
 describe("UCSBOrganizationForm tests", () => {
     const queryClient = new QueryClient();
 
