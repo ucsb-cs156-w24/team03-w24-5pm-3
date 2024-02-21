@@ -145,7 +145,7 @@ describe("HelpRequestEditPage tests", () => {
             fireEvent.change(tableOrBreakoutRoomField, { target: { value: '6' } });
             fireEvent.change(requestTimeField, { target: { value: '2022-01-02T12:00:00' } });
             fireEvent.change(explanationField, { target: { value: 'Need help w Swagger-ui' } });
-            fireEvent.change(solved, { target: { value: 'true' } });
+            fireEvent.change(solvedField, { target: { value: 'true' } });
             fireEvent.click(submitButton);
 
             await waitFor(() => expect(mockToast).toBeCalled());
