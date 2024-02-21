@@ -39,7 +39,7 @@ ThreeItemsOrdinaryUser.parameters = {
             return res(ctx.json(systemInfoFixtures.showingNeither));
         }),
         rest.get('/api/ucsbdiningcommonmenuitem/all', (_req, res, ctx) => {
-            return res(ctx.json(ucsbDiningCommonsMenuItemFixtures.threeDiningCommonsMenuItems));
+            return res(ctx.json(ucsbDiningCommonsMenuItemFixtures.threeMenuItems));
         }),
     ],
 }
@@ -55,7 +55,7 @@ ThreeItemsAdminUser.parameters = {
             return res(ctx.json(systemInfoFixtures.showingNeither));
         }),
         rest.get('/api/ucsbdiningcommonmenuitem/all', (_req, res, ctx) => {
-            return res(ctx.json(ucsbDiningCommonsMenuItemFixtures.threeDiningCommonsMenuItems));
+            return res(ctx.json(ucsbDiningCommonsMenuItemFixtures.threeMenuItems));
         }),
         rest.delete('/api/ucsbdiningcommonmenuitem', (req, res, ctx) => {
             window.alert("DELETE: " + JSON.stringify(req.url));
