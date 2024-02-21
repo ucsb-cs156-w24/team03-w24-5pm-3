@@ -16,6 +16,36 @@ jest.mock('react-router-dom', () => ({
 describe("RequestTable tests", () => {
   const queryClient = new QueryClient();
 
+
+  test("Renders empty table correctly", () => {
+    const expectedHeaders = ["id", "RequesterEmail", "TeamId", "TableOrBreakoutRoom", "RequestTime", "Explanation", "solved"];
+    const expectedFields = ["id", "requesterEmail", "teamId", "tableOrBreakoutRoom", "requestTime", "explanation", "solved"];
+    const testId = "HelpRequestTable";
+
+    // arrange
+    const currentUser = currentUserFixtures.adminUser;
+
+    // act
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <HelpRequestTable requests={[]} currentUser={currentUser} />
+        </MemoryRouter>
+      </QueryClientProvider>
+    );
+
+    // assert
+    expectedHeaders.forEach((headerText) => {
+      const header = screen.getByText(headerText);
+      expect(header).toBeInTheDocument();
+    });
+
+    expectedFields.forEach((field) => {
+      const fieldElement = screen.queryByTestId(`${testId}-cell-row-0-col-${field}`);
+      expect(fieldElement).not.toBeInTheDocument();
+    });
+  });
+
   test("Has the expected column headers and content for ordinary user", () => {
 
     const currentUser = currentUserFixtures.userOnly;
@@ -57,7 +87,7 @@ describe("RequestTable tests", () => {
 
   });
 
-  test("Has the expected colum headers and content for adminUser", () => {
+  test("Has the expected column headers and content for adminUser", () => {
 
     const currentUser = currentUserFixtures.adminUser;
 
@@ -124,8 +154,7 @@ describe("RequestTable tests", () => {
 
   });
 
-  test("Delete button calls delete callback", async () => {
-    // arrange
+  test("Delete button navigates to the delete page for admin user", async () => {
     const currentUser = currentUserFixtures.adminUser;
 
     // act - render the component
@@ -135,7 +164,7 @@ describe("RequestTable tests", () => {
             <HelpRequestTable requests={helpRequestFixtures.threeRequests} currentUser={currentUser} />
           </MemoryRouter>
         </QueryClientProvider>
-      );
+    );
 
       await waitFor(() => { expect(screen.getByTestId(`HelpRequestTable-cell-row-0-col-id`)).toHaveTextContent("2"); });
 
@@ -147,4 +176,3 @@ describe("RequestTable tests", () => {
   });
 
 });
-
