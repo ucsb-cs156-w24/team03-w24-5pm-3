@@ -1,6 +1,5 @@
-const UCSBOrganizationFixtures = { 
-    oneOrganization:
-    [
+const UCSBOrganizationFixtures = {
+    oneOrganization: [
       {
         "orgCode": "ZPR",
         "orgTranslationShort": "ZETA PHI RHO",
@@ -8,30 +7,25 @@ const UCSBOrganizationFixtures = {
         "inactive": false
       }
     ],
-
-    threeOrganizations:
-    [
+    threeOrganizations: [
         {
             "orgCode": "SKY",
             "orgTranslationShort": "SKYDIVING CLUB",
             "orgTranslation": "SKYDIVING CLUB AT UCSB",
             "inactive": false
         },
-
         {
             "orgCode": "OSLI",
             "orgTranslationShort": "STUDENT LIFE",
             "orgTranslation": "OFFICE OF STUDENT LIFE",
             "inactive": false
         },
-
         {
             "orgCode": "KRC",
             "orgTranslationShort": "KOREAN RADIO LC",
             "orgTranslation": "KOREAN RADIO CLUB",
             "inactive": false
         },
-
     ] 
 };
 
