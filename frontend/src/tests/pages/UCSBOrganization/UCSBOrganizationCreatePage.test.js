@@ -5,7 +5,6 @@ import { MemoryRouter } from "react-router-dom";
 
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
-
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 
@@ -52,17 +51,18 @@ describe("UCSBOrganizationCreatePage tests", () => {
         );
     });
 
-    test("on submit, makes request to backend, and redirects to /UCSBOrganization", async () => {
+
+    test("on submit, makes request to backend, and redirects to /ucsborganization", async () => {
 
         const queryClient = new QueryClient();
-        const organization = {
-            orgCode: "OSLI",
-            orgTranslationShort: "STUDENT LIFE",
-            orgTranslation: "OFFICE OF STUDENT LIFE",
-            inactive: false
+        const restaurant = {
+            orgCode: "ZPR",
+            orgTranslationShort: "ZETA PHI RHO",
+            orgTranslation: "ZETA PHI RHO",
+            inactive: "false"
         };
 
-        axiosMock.onPost("/api/UCSBOrganization/post").reply(202, organization);
+        axiosMock.onPost("/api/ucsborganizations/post").reply(202, restaurant);
 
         render(
             <QueryClientProvider client={queryClient}>
@@ -73,42 +73,42 @@ describe("UCSBOrganizationCreatePage tests", () => {
         )
 
         await waitFor(() => {
-            expect(screen.getByLabelText("Organization Code")).toBeInTheDocument();
+            expect(screen.getByLabelText("orgCode")).toBeInTheDocument();
         });
 
-        const orgCodeInput = screen.getByLabelText("Organization Code");
+        const orgCodeInput = screen.getByLabelText("orgCode");
         expect(orgCodeInput).toBeInTheDocument();
 
-        const orgTranslationShortInput = screen.getByLabelText("Organization Translation (short)");
+        const orgTranslationShortInput = screen.getByLabelText("orgTranslationShort");
         expect(orgTranslationShortInput).toBeInTheDocument();
 
-        const orgTranslationInput = screen.getByLabelText("Organization Translation");
+        const orgTranslationInput = screen.getByLabelText("orgTranslation");
         expect(orgTranslationInput).toBeInTheDocument();
 
-        const inactiveInput = screen.getByLabelText("Inactive");
+        const inactiveInput = screen.getByLabelText("inactive");
         expect(inactiveInput).toBeInTheDocument();
 
         const createButton = screen.getByText("Create");
         expect(createButton).toBeInTheDocument();
 
-        fireEvent.change(orgCodeInput, { target: { value: 'OSLI' } })
-        fireEvent.change(orgTranslationShortInput, { target: { value: 'STUDENT LIFE' } })
-        fireEvent.change(orgTranslationInput, { target: { value: 'OFFICE OF STUDENT LIFE' } })
-        fireEvent.click(inactiveInput);
+        fireEvent.change(orgCodeInput, { target: { value: 'ZPR' } })
+        fireEvent.change(orgTranslationShortInput, { target: { value: 'ZETA PHI RHO' } })
+        fireEvent.change(orgTranslationInput, { target: { value: 'ZETA PHI RHO' } })
+        fireEvent.change(inactiveInput, { target: { value: false } })
         fireEvent.click(createButton);
 
         await waitFor(() => expect(axiosMock.history.post.length).toBe(1));
 
         expect(axiosMock.history.post[0].params).toEqual({
-            orgCode: "OSLI",
-            orgTranslationShort: "STUDENT LIFE",
-            orgTranslation: "OFFICE OF STUDENT LIFE",
-            inactive: true
-
+            orgCode: "ZPR",
+            orgTranslationShort: "ZETA PHI RHO",
+            orgTranslation: "ZETA PHI RHO",
+            inactive: "false"
         });
 
-        expect(mockToast).toBeCalledWith("New organization Created - orgCode: OSLI");
-        expect(mockNavigate).toBeCalledWith({ "to": "/UCSBOrganization" });
+        // assert - check that the toast was called with the expected message
+        expect(mockToast).toBeCalledWith("New organization Created - orgCode: ZPR orgTranslationShort: ZETA PHI RHO\n    orgTranslation: ZETA PHI RHO inactive: false\n    ");
+        expect(mockNavigate).toBeCalledWith({ "to": "/ucsborganization" });
 
     });
 });

@@ -7,23 +7,24 @@ import { toast } from "react-toastify";
 
 export default function UCSBOrganizationEditPage({storybook=false}) {
     let { orgCode } = useParams();
-    
+
     const { data: organization, _error, _status } =
         useBackend(
             // Stryker disable next-line all : don't test internal caching of React Query
-            [`/api/ucsborganization?orgCode=${orgCode}`],
+            [`/api/ucsborganizations/?orgCode=${orgCode}`],
             {  // Stryker disable next-line all : GET is the default, so mutating this to "" doesn't introduce a bug
                 method: "GET",
-                url: `/api/ucsborganization`,
+                url: `/api/ucsborganizations`,
                 params: {
                     orgCode
                 }
             }
         );
 
-
+    console.log(organization, _error, _status)
+          
     const objectToAxiosPutParams = (organization) => ({
-        url: "/api/ucsborganization",
+        url: "/api/ucsborganizations",
         method: "PUT",
         params: {
             orgCode: organization.orgCode,
@@ -32,19 +33,19 @@ export default function UCSBOrganizationEditPage({storybook=false}) {
             orgCode: organization.orgCode,
             orgTranslationShort: organization.orgTranslationShort,
             orgTranslation: organization.orgTranslation,
-            inactive: organization.inactive
+            inactive: organization.inactive,
         }
     });
 
     const onSuccess = (organization) => {
-        toast(`UCSBOrganization Updated - orgCode: ${organization.orgCode} orgTranslationShort: ${organization.orgTranslationShort} orgTranslation: ${organization.orgTranslation} inactive: ${organization.inactive}`);
+        toast(`Organization Updated - orgCode: ${organization.orgCode} orgTranslationShort: ${organization.orgTranslationShort} orgTranslation: ${organization.orgTranslation}  inactive: ${organization.inactive} `);
     }
 
     const mutation = useBackendMutation(
         objectToAxiosPutParams,
         { onSuccess },
         // Stryker disable next-line all : hard to set up test for caching
-        [`/api/ucsborganization?orgCode=${orgCode}`]
+        [`/api/ucsborganizations?orgCode=${orgCode}`]
     );
 
     const { isSuccess } = mutation
@@ -63,9 +64,13 @@ export default function UCSBOrganizationEditPage({storybook=false}) {
                 <h1>Edit UCSBOrganization</h1>
                 {
                     organization && <UCSBOrganizationForm submitAction={onSubmit} buttonLabel={"Update"} initialContents={organization} />
+
                 }
+
             </div>
+            
         </BasicLayout>
+        
     )
 
 }

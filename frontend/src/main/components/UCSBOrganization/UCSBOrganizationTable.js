@@ -19,13 +19,12 @@ export default function UCSBOrganizationTable({ organizations, currentUser }) {
     const deleteMutation = useBackendMutation(
         cellToAxiosParamsDelete,
         { onSuccess: onDeleteSuccess },
-        ["/api/ucsborganization/all"]
+        ["/api/ucsborganizations/all"]
     );
     // Stryker restore all 
 
     // Stryker disable next-line all : TODO try to make a good test for this
     const deleteCallback = async (cell) => { deleteMutation.mutate(cell); }
-
 
     const columns = [
         {
@@ -33,18 +32,17 @@ export default function UCSBOrganizationTable({ organizations, currentUser }) {
             accessor: 'orgCode', // accessor is the "key" in the data
         },
         {
-            Header: 'orgTranslationShort',
+            Header: 'OrgTranslationShort',
             accessor: 'orgTranslationShort',
         },
         {
-            Header: 'orgTranslation',
+            Header: 'OrgTranslation',
             accessor: 'orgTranslation',
         },
         {
-            Header: 'inactive',
-            accessor: 'inactive',
-            Cell: ({ value }) => value.toString()  // Explicitly convert boolean to string
-
+            Header: 'Inactive',
+            id: 'inactive',
+            accessor: row => String(row.inactive)
         }
     ];
 

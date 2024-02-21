@@ -11,7 +11,7 @@ jest.mock('react-toastify', () => {
     };
 });
 
-describe("UCSBOrganizationUtils", () => {
+describe("ucsbOrganizationUtils", () => {
 
     describe("onDeleteSuccess", () => {
 
@@ -36,16 +36,16 @@ describe("UCSBOrganizationUtils", () => {
 
         test("It returns the correct params", () => {
             // arrange
-            const cell = { row: { values: { orgCode: "VSA" } } };
+            const cell = { row: { values: { orgCode: "ZPR" } } };
 
             // act
             const result = cellToAxiosParamsDelete(cell);
 
             // assert
             expect(result).toEqual({
-                url: "/api/ucsborganization",
+                url: "/api/ucsborganizations",
                 method: "DELETE",
-                params: { orgCode: "VSA" }
+                params: { orgCode: "ZPR" }
             });
         });
 
