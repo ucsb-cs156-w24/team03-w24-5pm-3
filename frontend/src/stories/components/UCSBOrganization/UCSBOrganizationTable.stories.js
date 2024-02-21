@@ -1,6 +1,6 @@
 import React from 'react';
 import UCSBOrganizationTable from "main/components/UCSBOrganization/UCSBOrganizationTable";
-import { ucsbOrganizationFixtures } from 'fixtures/ucsbOrganizationFixtures';
+import { ucsbOrganizationFixtures } from 'fixtures/UCSBOrganizationFixtures';
 import { currentUserFixtures } from 'fixtures/currentUserFixtures';
 import { rest } from "msw";
 
