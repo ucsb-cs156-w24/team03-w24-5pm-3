@@ -1,38 +1,36 @@
-const UCSBOrganizationFixtures = {
-    oneOrganization:
-    [
+const ucsbOrganizationFixtures = {
+    oneUCSBOrganization:
       {
-        "orgCode": "ZPR",
-        "orgTranslationShort": "ZETA PHI RHO",
+       "orgCode": "ZPR",
+       "orgTranslationShort": "ZETA PHI RHO",
         "orgTranslation": "ZETA PHI RHO",
-        "inactive": false
-      }
-    ],
+        "inactive": "false"      
+      },
 
-    threeOrganizations:
+    threeUCSBOrganization:
     [
-        { 
+        {
             "orgCode": "SKY",
             "orgTranslationShort": "SKYDIVING CLUB",
             "orgTranslation": "SKYDIVING CLUB AT UCSB",
-            "inactive": false
+            "inactive": "false"         
         },
 
         {
             "orgCode": "OSLI",
             "orgTranslationShort": "STUDENT LIFE",
             "orgTranslation": "OFFICE OF STUDENT LIFE",
-            "inactive": false 
+            "inactive": "false"   
         },
 
         {
             "orgCode": "KRC",
-            "orgTranslationShort": "KOREAN RADIO LC",
+            "orgTranslationShort": "KOREAN RADIO CL",
             "orgTranslation": "KOREAN RADIO CLUB",
-            "inactive": false
+            "inactive": "false"     
         },
-
+        
     ]
 };
 
-export { UCSBOrganizationFixtures };
+export { ucsbOrganizationFixtures };
