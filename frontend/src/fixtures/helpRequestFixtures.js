@@ -11,10 +11,10 @@ const helpRequestFixtures = {
     threeRequests: [
         {
             "id": 2,
-            "requesterEmail": "bendover@ucsb.edu",
-            "teamId": "s22-5pm-3",
-            "tableOrBreakoutRoom": "7",
-            "explanation": "Need help with Swagger-ui",
+            "requesterEmail": "bendover1@ucsb.edu",
+            "teamId": "s22-6pm-3",
+            "tableOrBreakoutRoom": "6",
+            "explanation": "Need help w Swagger-ui",
             "requestTime": "2022-01-02T12:00:00",
             "solved": false
         },
