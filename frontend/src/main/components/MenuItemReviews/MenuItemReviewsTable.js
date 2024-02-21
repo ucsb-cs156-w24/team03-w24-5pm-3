@@ -34,7 +34,7 @@ export default function MenuItemReviewsTable({ menuItemReviews, currentUser }) {
             accessor: 'id', // accessor is the "key" in the data
         },
         {
-            Header: 'Menu Item Id',
+            Header: 'Menu Item ID',
             accessor: 'itemId',
         },
         {
