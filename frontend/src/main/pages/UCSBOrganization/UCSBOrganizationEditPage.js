@@ -7,37 +7,38 @@ import { toast } from "react-toastify";
 
 export default function UCSBOrganizationEditPage({storybook=false}) {
     let { orgCode } = useParams();
-    
-    const { data: ucsbOrganization, _error, _status } =
+
+    const { data: organization, _error, _status } =
         useBackend(
             // Stryker disable next-line all : don't test internal caching of React Query
-            [`/api/ucsborganizations?orgCode=${orgCode}`],
+            [`/api/ucsborganizations/?orgCode=${orgCode}`],
             {  // Stryker disable next-line all : GET is the default, so mutating this to "" doesn't introduce a bug
                 method: "GET",
                 url: `/api/ucsborganizations`,
                 params: {
-                    code: orgCode
+                    orgCode
                 }
             }
         );
 
-    const objectToAxiosPutParams = (ucsbOrganization) => ({
+    console.log(organization, _error, _status)
+
+    const objectToAxiosPutParams = (organization) => ({
         url: "/api/ucsborganizations",
         method: "PUT",
         params: {
-            code: ucsbOrganization.orgCode,
-            
+            orgCode: organization.orgCode,
         },
         data: {
-            orgCode: ucsbOrganization.orgCode,
-            orgTranslationShort: ucsbOrganization.orgTranslationShort,
-            orgTranslation: ucsbOrganization.orgTranslation,
-            inactive: ucsbOrganization.inactive,
+            orgCode: organization.orgCode,
+            orgTranslationShort: organization.orgTranslationShort,
+            orgTranslation: organization.orgTranslation,
+            inactive: organization.inactive,
         }
     });
 
-    const onSuccess = (ucsbOrganization) => {
-        toast(`UCSBOrganization Updated - orgCode: ${ucsbOrganization.orgCode} orgTranslationShort: ${ucsbOrganization.orgTranslationShort} orgTranslation: ${ucsbOrganization.orgTranslation} inactive: ${ucsbOrganization.inactive}`);
+    const onSuccess = (organization) => {
+        toast(`Organization Updated - orgCode: ${organization.orgCode} orgTranslationShort: ${organization.orgTranslationShort} orgTranslation: ${organization.orgTranslation}  inactive: ${organization.inactive} `);
     }
 
     const mutation = useBackendMutation(
@@ -54,7 +55,7 @@ export default function UCSBOrganizationEditPage({storybook=false}) {
     }
 
     if (isSuccess && !storybook) {
-        return <Navigate to="/ucsborganizations" />
+        return <Navigate to="/ucsborganization" />
     }
 
     return (
@@ -62,10 +63,14 @@ export default function UCSBOrganizationEditPage({storybook=false}) {
             <div className="pt-2">
                 <h1>Edit UCSBOrganization</h1>
                 {
-                    ucsbOrganization && <UCSBOrganizationForm submitAction={onSubmit} buttonLabel={"Update"} initialContents={ucsbOrganization} />
+                    organization && <UCSBOrganizationForm submitAction={onSubmit} buttonLabel={"Update"} initialContents={organization} />
+
                 }
+
             </div>
+
         </BasicLayout>
+
     )
 
 }
