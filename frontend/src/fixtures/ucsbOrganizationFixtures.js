@@ -11,7 +11,7 @@ const UCSBOrganizationFixtures = {
 
     threeOrganizations:
     [
-        {
+        { 
             "orgCode": "SKY",
             "orgTranslationShort": "SKYDIVING CLUB",
             "orgTranslation": "SKYDIVING CLUB AT UCSB",
