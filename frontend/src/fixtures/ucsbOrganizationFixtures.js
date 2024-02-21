@@ -1,4 +1,4 @@
-const UCSBOrganizationFixtures = {
+const UCSBOrganizationFixtures = { 
     oneOrganization:
     [
       {
