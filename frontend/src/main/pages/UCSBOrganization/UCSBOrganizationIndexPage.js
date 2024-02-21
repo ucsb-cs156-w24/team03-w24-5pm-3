@@ -2,19 +2,19 @@ import React from 'react'
 import { useBackend } from 'main/utils/useBackend';
 
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
-import HelpRequestTable from 'main/components/HelpRequest/HelpRequestTable';
+import UCSBOrganizationTable from 'main/components/UCSBOrganization/UCSBOrganizationTable';
 import { useCurrentUser , hasRole} from 'main/utils/currentUser'
 import { Button } from 'react-bootstrap';
 
-export default function HelpRequestIndexPage() {
+export default function UCSBOrganizationIndexPage() {
 
     const currentUser = useCurrentUser();
 
-    const { data: helpRequests, error: _error, status: _status } =
+    const { data: ucsborganization, error: _error, status: _status } =
         useBackend(
             // Stryker disable next-line all : don't test internal caching of React Query
-            ["/api/HelpRequests/all"],
-            { method: "GET", url: "/api/HelpRequests/all" },
+            ["/api/ucsborganization/all"],
+            { method: "GET", url: "/api/ucsborganization/all" },
             // Stryker disable next-line all : don't test default value of empty list
             []
         );
@@ -24,10 +24,10 @@ export default function HelpRequestIndexPage() {
             return (
                 <Button
                     variant="primary"
-                    href="/helprequest/create"
+                    href="/ucsborganization/create"
                     style={{ float: "right" }}
                 >
-                    Create Help Request
+                    Create UCSBOrganization
                 </Button>
             )
         } 
@@ -37,8 +37,8 @@ export default function HelpRequestIndexPage() {
         <BasicLayout>
             <div className="pt-2">
                 {createButton()}
-                <h1>HelpRequest</h1>
-                <HelpRequestTable requests={helpRequests} currentUser={currentUser} />
+                <h1>UCSBOrganizations</h1>
+                <UCSBOrganizationTable ucsbOrganization={ucsborganization} currentUser={currentUser} />
             </div>
         </BasicLayout>
     );

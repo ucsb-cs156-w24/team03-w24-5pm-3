@@ -1,17 +1,17 @@
 import React from 'react';
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
-import { recommendationRequestFixtures } from "fixtures/recommendationRequestFixtures";
 import { rest } from "msw";
 
-import RecommendationRequestEditPage from "main/pages/RecommendationRequest/RecommendationRequestEditPage";
+import MenuItemReviewEditPage from "main/pages/MenuItemReviews/MenuItemReviewEditPage";
+import { menuItemReviewFixtures } from 'fixtures/menuItemReviewFixtures';
 
 export default {
-    title: 'pages/RecommendationRequest/RecommendationRequestsEditPage',
-    component: RecommendationRequestEditPage
+    title: 'pages/MenuItemReviews/MenuItemReviewEditPage',
+    component: MenuItemReviewEditPage
 };
 
-const Template = () => <RecommendationRequestEditPage storybook={true} />;
+const Template = () => <MenuItemReviewEditPage storybook={true}/>;
 
 export const Default = Template.bind({});
 Default.parameters = {
@@ -22,16 +22,13 @@ Default.parameters = {
         rest.get('/api/systemInfo', (_req, res, ctx) => {
             return res(ctx.json(systemInfoFixtures.showingNeither));
         }),
-        rest.get('/api/recommendationrequest', (_req, res, ctx) => {
-            return res(ctx.json(recommendationRequestFixtures.threeRecommendationRequests[0]));
+        rest.get('/api/menuitemreviews', (_req, res, ctx) => {
+            return res(ctx.json(menuItemReviewFixtures.threeMenuItemReviews[0]));
         }),
-        rest.put('/api/recommendationrequest', async (req, res, ctx) => {
+        rest.put('/api/menuitemreviews', async (req, res, ctx) => {
             var reqBody = await req.text();
             window.alert("PUT: " + req.url + " and body: " + reqBody);
             return res(ctx.status(200),ctx.json({}));
         }),
     ],
 }
-
-
-

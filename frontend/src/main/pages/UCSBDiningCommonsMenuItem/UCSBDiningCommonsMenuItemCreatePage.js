@@ -22,7 +22,7 @@ export default function UCSBDiningCommonsMenuItemCreatePage({storybook=false}) {
 
   const mutation = useBackendMutation(
     objectToAxiosParams,
-     { onSuccess }, 
+     { onSuccess },
      // Stryker disable next-line all : hard to set up test for caching
      ["/api/ucsbdiningcommonsmenuitem/all"] // mutation makes this key stale so that pages relying on it reload
      );

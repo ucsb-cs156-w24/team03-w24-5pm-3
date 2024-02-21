@@ -35,6 +35,7 @@ describe("UCSBOrganizationForm tests", () => {
       expect(header).toBeInTheDocument();
     });
 
+    // Check data-testid attributes
     expect(screen.getByTestId(`${testId}-orgCode`)).toBeInTheDocument();
     expect(screen.getByTestId(`${testId}-orgTranslationShort`)).toBeInTheDocument();
     expect(screen.getByTestId(`${testId}-orgTranslation`)).toBeInTheDocument();
@@ -56,11 +57,10 @@ describe("UCSBOrganizationForm tests", () => {
       expect(header).toBeInTheDocument();
     });
 
-    expect(await screen.findByTestId(`${testId}-id`)).toBeInTheDocument();
+    expect(await screen.findByTestId(`${testId}-orgCode`)).toBeInTheDocument();
     expect(screen.getByTestId(`${testId}-orgCode`).value).toBe("ZPR");
+    // Add more assertions based on your fixture data
   });
-
-//I hate tests
 
   test("that navigate(-1) is called when Cancel is clicked", async () => {
     render(

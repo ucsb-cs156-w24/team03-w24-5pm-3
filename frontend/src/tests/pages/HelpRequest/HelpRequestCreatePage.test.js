@@ -65,7 +65,7 @@ describe("HelpRequestCreatePage tests", () => {
             solved: false
         };
 
-        axiosMock.onPost("/api/HelpRequest/post").reply(202, helpRequest);
+        axiosMock.onPost("/api/HelpRequests/post").reply(202, helpRequest);
 
         render(
             <QueryClientProvider client={queryClient}>
