@@ -16,12 +16,12 @@ jest.mock('react-router-dom', () => ({
 describe("UCSBDiningCommonsMenuItemTable tests", () => {
   const queryClient = new QueryClient();
 
-  const expectedHeaders = ["DiningCommonsCode", "Name", "Station"];
-  const expectedFields = ["diningCommonsCode", "name", "station"];
+  const expectedHeaders = ["id", "Name", "Dining Commons Code", "Station"];
+  const expectedFields = ["id", "name", "diningCommonsCode", "station"];
   const testId = "UCSBDiningCommonsMenuItemTable";
 
   test("renders empty table correctly", () => {
-    
+
     // arrange
     const currentUser = currentUserFixtures.adminUser;
 
