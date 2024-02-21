@@ -170,5 +170,3 @@ describe("UCSBOrganizationTable tests", () => {
     fireEvent.click(deleteButton);
   });
 });
-
-  

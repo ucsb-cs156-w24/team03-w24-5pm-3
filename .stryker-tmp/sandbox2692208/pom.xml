@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <!-- (0) <modelVersion/> -->
+  <modelVersion>4.0.0</modelVersion>
+
+  <!-- (1) <parent/> -->
+
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.6.3</version>
+  </parent>
+
+  <!-- (2) <groupId/> -->
+  <groupId>edu.ucsb.cs156</groupId>
+
+  <!-- (3) <artifactId/> -->
+
+  <artifactId>team03</artifactId>
+
+  <!-- (4) <version/> -->
+  <version>1.0.0</version>
+
+  <!-- (5) <packaging/> -->
+  <!-- (6) <name/> -->
+  <!-- (7) <description/> -->
+
+  <description>Demonstration of Spring Boot Backend</description>
+
+  <!-- (8) <url/> -->
+  <!-- (9) <inceptionYear/> -->
+  <!-- (10) <organization/> -->
+  <!-- (11) <licenses/> -->
+  <!-- (12) <developers/> -->
+  <!-- (13) <contributors/> -->
+  <!-- (14) <mailingLists/> -->
+  <!-- (15) <prerequisites/> -->
+  <!-- (16) <modules/> -->
+  <!-- (17) <scm/> -->
+  <!-- (18) <issueManagement/> -->
+  <!-- (19) <ciManagement/> -->
+  <!-- (20) <distributionManagement/> -->
+  <!-- (21) <properties/> -->
+
+  <properties>
+    <java.version>17</java.version>
+    <mainClass>edu.ucsb.cs156.example.ExampleApplication</mainClass>
+    <app.package>edu.ucsb.cs156.example</app.package>
+    <app.packagePath>edu/ucsb/cs156/example</app.packagePath>
+  </properties>
+
+  <!-- (22) <dependencyManagement/> -->
+  <!-- (23) <dependencies/> -->
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-oauth2-client</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-gateway-mvc</artifactId>
+      <version>3.0.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>me.paulschwarz</groupId>
+      <artifactId>spring-dotenv</artifactId>
+      <version>2.4.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-devtools</artifactId>
+      <scope>runtime</scope>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-configuration-processor</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
+    <dependency>
+      <groupId>javax.validation</groupId>
+      <artifactId>validation-api</artifactId>
+      <version>2.0.1.Final</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springdoc</groupId>
+      <artifactId>springdoc-openapi-ui</artifactId>
+      <version>1.7.0</version>
+   </dependency>
+
+  </dependencies>
+
+  <!-- (24) <repositories/> -->
+  <!-- (25) <pluginRepositories/> -->
+  <!-- (26) <build/> -->
+
+  <build>
+    <plugins>
+      <!-- Gives us: mvn spring-boot:run -->
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <mainClass>${mainClass}</mainClass>
+        </configuration>
+      </plugin>
+
+      <!-- For mvn:package, the jar file is now executable -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.2.0</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <!-- full package name of class with the main you want to run -->
+              <mainClass>${mainClass}</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+
+
+      <!-- Test case coverage report -->
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.7</version>
+        <configuration>
+          <excludes>
+            <exclude>**/${app.packagePath}/aop/LoggingAspect.*</exclude>
+            <exclude>**/${app.packagePath}/config/*</exclude>
+            <exclude>**/${app.packagePath}/controllers/FrontendController.*</exclude>
+            <exclude>**/${app.packagePath}/controllers/FrontendProxyController.*</exclude>
+            <exclude>**/${app.packagePath}/services/CurrentUserServiceImpl.*</exclude>
+            <exclude>**/${app.packagePath}/ExampleApplication.*</exclude>
+          </excludes>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>report</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>check</id>
+            <goals>
+              <goal>check</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <rule implementation="org.jacoco.maven.RuleConfiguration">
+                  <element>BUNDLE</element>
+                  <limits>
+                    <limit implementation="org.jacoco.report.check.Limit">
+                      <counter>INSTRUCTION</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>1.00</minimum>
+                    </limit>
+                    <limit implementation="org.jacoco.report.check.Limit">
+                      <counter>BRANCH</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>1.00</minimum>
+                    </limit>
+                    <limit implementation="org.jacoco.report.check.Limit">
+                      <counter>LINE</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>1.00</minimum>
+                    </limit>
+                    <limit implementation="org.jacoco.report.check.Limit">
+                      <counter>CLASS</counter>
+                      <value>MISSEDCOUNT</value>
+                      <maximum>0</maximum>
+                    </limit>
+                  </limits>
+                </rule>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+
+      <plugin>
+        <groupId>org.pitest</groupId>
+        <artifactId>pitest-maven</artifactId>
+        <version>1.7.3</version>
+        <dependencies>
+          <dependency>
+            <groupId>org.pitest</groupId>
+            <artifactId>pitest-junit5-plugin</artifactId>
+            <version>0.14</version>
+          </dependency>
+        </dependencies>
+        <configuration>
+          <historyInputFile>
+            target/pit-history/history.bin
+          </historyInputFile>
+          <historyOutputFile>
+            target/pit-history/history.bin
+          </historyOutputFile>
+          <verbose>true</verbose>
+          <targetClasses>
+            <param>edu.ucsb.cs156.*</param>
+          </targetClasses>
+          <targetTests>
+            <param>edu.ucsb.cs156.*</param>
+          </targetTests>
+          <excludedClasses>
+            <param>${app.package}.aop.LoggingAspect</param>
+            <param>${app.package}.controllers.FrontendController</param>
+            <param>${app.package}.controllers.FrontendProxyController</param>
+            <param>${app.package}.services.CurrentUserServiceImpl</param>
+            <param>${app.package}.ExampleApplication</param>
+            <param>${app.package}.config.SecurityConfig</param>
+          </excludedClasses>
+          <excludedTestClasses></excludedTestClasses>
+          <outputFormats>
+            <outputFormat>HTML</outputFormat>
+            <outputFormat>CSV</outputFormat>
+            <outputFormat>XML</outputFormat>
+          </outputFormats>
+          <avoidCallsTo>
+            <avoidCallsTo>java.util.logging</avoidCallsTo>
+            <avoidCallsTo>org.apache.log4j</avoidCallsTo>
+            <avoidCallsTo>org.slf4j</avoidCallsTo>
+            <avoidCallsTo>org.apache.commons.logging</avoidCallsTo>
+            <avoidCallsTo>java.lang.Exception</avoidCallsTo>
+            <avoidCallsTo>org.springframework.security.core.context.SecurityContextHolder</avoidCallsTo>
+          </avoidCallsTo>
+          <timestampedReports>false</timestampedReports>
+        </configuration>
+      </plugin>
+
+      <!-- needed to get JUnit 5 tests to run -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <!-- JUnit 5 requires Surefire version 2.22.0 or higher -->
+        <version>2.22.0</version>
+      </plugin>
+
+    </plugins>
+  </build>
+
+  <!-- (27) <reporting/> -->
+  <!-- (28) <profiles/> -->
+
+  <profiles>
+    <profile>
+      <id>localhost</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <springProfiles>development</springProfiles>
+      </properties>
+      <dependencies>
+        <dependency>
+          <groupId>com.h2database</groupId>
+          <artifactId>h2</artifactId>
+          <scope>runtime</scope>
+        </dependency>
+      </dependencies>
+    </profile>
+    <profile>
+      <id>production</id>
+      <activation>
+        <property>
+          <name>env.PRODUCTION</name>
+        </property>
+      </activation>
+      <properties>
+        <springProfiles>production</springProfiles>
+      </properties>
+      <dependencies>
+        <dependency>
+          <groupId>com.h2database</groupId>
+          <artifactId>h2</artifactId>
+          <scope>runtime</scope>
+        </dependency>
+      </dependencies>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.github.eirslett</groupId>
+            <artifactId>frontend-maven-plugin</artifactId>
+            <version>1.12.1</version>
+            <configuration>
+              <workingDirectory>frontend</workingDirectory>
+              <installDirectory>${project.build.directory}</installDirectory>
+            </configuration>
+            <executions>
+              <execution>
+                <id>install node and npm</id>
+                <goals>
+                  <goal>install-node-and-npm</goal>
+                </goals>
+                <configuration>
+                  <nodeVersion>v16.20.0</nodeVersion>
+                </configuration>
+              </execution>
+              <execution>
+                <id>npm install</id>
+                <goals>
+                  <goal>npm</goal>
+                </goals>
+                <configuration>
+                  <arguments>ci</arguments>
+                </configuration>
+              </execution>
+              <execution>
+                <id>npm run build</id>
+                <goals>
+                  <goal>npm</goal>
+                </goals>
+                <configuration>
+                  <arguments>run build</arguments>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>3.0.0</version>
+            <executions>
+              <execution>
+                <phase>generate-resources</phase>
+                <configuration>
+                  <target>
+                    <copy todir="${project.build.outputDirectory}/public">
+                      <fileset dir="${project.basedir}/frontend/build" />
+                    </copy>
+                  </target>
+                </configuration>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
+
+</project>

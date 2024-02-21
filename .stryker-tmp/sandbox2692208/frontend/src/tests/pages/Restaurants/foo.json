@@ -1,0 +1,98 @@
+{
+    "delete": [],
+    "get": [
+        {
+            "data": undefined,
+            "headers": {
+                "Accept": "application/json, text/plain, */*"
+            },
+            "maxBodyLength": -1,
+            "maxContentLength": -1,
+            "method": "get",
+            "timeout": 0,
+            "transformRequest": [
+                [Function transformRequest
+                ]
+            ],
+            "transformResponse": [
+                [Function transformResponse
+                ]
+            ],
+            "transitional": {
+                "clarifyTimeoutError": false,
+                "forcedJSONParsing": true,
+                "silentJSONParsing": true
+            },
+            "url": "/api/currentUser",
+            "validateStatus": [Function validateStatus
+            ],
+            "xsrfCookieName": "XSRF-TOKEN",
+            "xsrfHeaderName": "X-XSRF-TOKEN"
+        },
+        {
+            "data": undefined,
+            "headers": {
+                "Accept": "application/json, text/plain, */*"
+            },
+            "maxBodyLength": -1,
+            "maxContentLength": -1,
+            "method": "get",
+            "timeout": 0,
+            "transformRequest": [
+                [Function transformRequest
+                ]
+            ],
+            "transformResponse": [
+                [Function transformResponse
+                ]
+            ],
+            "transitional": {
+                "clarifyTimeoutError": false,
+                "forcedJSONParsing": true,
+                "silentJSONParsing": true
+            },
+            "url": "/api/systemInfo",
+            "validateStatus": [Function validateStatus
+            ],
+            "xsrfCookieName": "XSRF-TOKEN",
+            "xsrfHeaderName": "X-XSRF-TOKEN"
+        },
+        {
+            "data": undefined,
+            "headers": {
+                "Accept": "application/json, text/plain, */*"
+            },
+            "maxBodyLength": -1,
+            "maxContentLength": -1,
+            "method": "get",
+            "params": {
+                "id": 17
+            },
+            "timeout": 0,
+            "transformRequest": [
+                [Function transformRequest
+                ]
+            ],
+            "transformResponse": [
+                [Function transformResponse
+                ]
+            ],
+            "transitional": {
+                "clarifyTimeoutError": false,
+                "forcedJSONParsing": true,
+                "silentJSONParsing": true
+            },
+            "url": "/api/restaurants",
+            "validateStatus": [Function validateStatus
+            ],
+            "xsrfCookieName": "XSRF-TOKEN",
+            "xsrfHeaderName": "X-XSRF-TOKEN"
+        }
+    ],
+    "head": [],
+    "list": [],
+    "options": [],
+    "patch": [],
+    "post": [],
+    "put": []
+}
