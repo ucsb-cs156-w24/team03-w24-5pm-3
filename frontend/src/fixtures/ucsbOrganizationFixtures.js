@@ -20,14 +20,14 @@ const ucsbOrganizationFixtures = {
             "orgCode": "OSLI",
             "orgTranslationShort": "STUDENT LIFE",
             "orgTranslation": "OFFICE OF STUDENT LIFE",
-            "inactive": "false"   
+            "inactive": "true"   
         },
 
         {
             "orgCode": "KRC",
             "orgTranslationShort": "KOREAN RADIO CL",
             "orgTranslation": "KOREAN RADIO CLUB",
-            "inactive": "false"     
+            "inactive": "true"     
         },
         
     ]
