@@ -5,7 +5,6 @@ import { recommendationRequestFixtures } from "fixtures/recommendationRequestFix
 import { rest } from "msw";
 
 import RecommendationRequestIndexPage from "main/pages/RecommendationRequest/RecommendationRequestIndexPage";
-import {ucsbDatesFixtures} from "../../../fixtures/ucsbDatesFixtures";
 
 export default {
     title: 'pages/RecommendationRequest/RecommendationRequestsIndexPage',
@@ -39,7 +38,7 @@ ThreeItemsOrdinaryUser.parameters = {
         rest.get('/api/systemInfo', (_req, res, ctx) => {
             return res(ctx.json(systemInfoFixtures.showingNeither));
         }),
-        rest.get('/api/ucsbdates/all', (_req, res, ctx) => {
+        rest.get('/api/recommendationrequest/all', (_req, res, ctx) => {
             return res(ctx.json(recommendationRequestFixtures.threeRecommendationRequests));
         }),
     ],
@@ -56,7 +55,7 @@ ThreeItemsAdminUser.parameters = {
             return res(ctx.json(systemInfoFixtures.showingNeither));
         }),
         rest.get('/api/recommendationrequest/all', (_req, res, ctx) => {
-            return res(ctx.json(ucsbDatesFixtures.threeDates));
+            return res(ctx.json(recommendationRequestFixtures.threeRecommendationRequests));
         }),
         rest.delete('/api/recommendationrequest/', (req, res, ctx) => {
             window.alert("DELETE: " + JSON.stringify(req.url));
